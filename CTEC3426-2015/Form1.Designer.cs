@@ -1092,7 +1092,7 @@
             // 
             this.lblDegrees.AutoSize = true;
             this.lblDegrees.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDegrees.Location = new System.Drawing.Point(158, 36);
+            this.lblDegrees.Location = new System.Drawing.Point(158, 37);
             this.lblDegrees.Name = "lblDegrees";
             this.lblDegrees.Size = new System.Drawing.Size(20, 20);
             this.lblDegrees.TabIndex = 34;
