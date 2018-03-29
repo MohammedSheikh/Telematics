@@ -258,6 +258,7 @@ namespace CTEC3426_2015
             }
         }
 
+        //toggle motor
         private void btnMotorOnOff_Click(object sender, EventArgs e)
         {
             if (lblMStatus.Text == "Off")
