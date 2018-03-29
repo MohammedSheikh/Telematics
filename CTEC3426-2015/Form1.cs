@@ -37,6 +37,14 @@ namespace CTEC3426_2015
 
         }
 
+        private void CTEC3426_Load(object sender, EventArgs e)
+        {
+            btnMotorFwdRev.Enabled = false;
+            lblMDirection.Text = "";
+
+            
+        }
+
         /* Initialise the toolbar menu */
         public void initMenu()
         {
@@ -75,6 +83,16 @@ namespace CTEC3426_2015
             this.readThread.Start();
             reading = true;
             sendCommand(serialPort, "@");
+        }
+
+        // Writes a command with some optional data to the serial port
+        public void sendCommand(SerialPort sp, String command, String payload = null)
+        {
+            sp.Write(command);
+            if (payload != null)
+            {
+                sp.Write(payload);
+            }
         }
 
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -248,15 +266,7 @@ namespace CTEC3426_2015
             }
         }
 
-        // Writes a command with some optional data to the serial port
-        public void sendCommand(SerialPort sp, String command, String payload = null)
-        {
-            sp.Write(command);
-            if (payload != null)
-            {
-                sp.Write(payload);
-            }
-        }
+        
 
         //toggle motor
         private void btnMotorOnOff_Click(object sender, EventArgs e)
@@ -371,23 +381,22 @@ namespace CTEC3426_2015
             lblSMSMessage.Text = "";
         }
 
-
-        private void CTEC3426_Load(object sender, EventArgs e)
-        {
-            btnMotorFwdRev.Enabled = false;
-            lblMDirection.Text = "";
-        }
-
         private void btnGetTemp_Click(object sender, EventArgs e)
         {
-            sendCommand(serialPort, "t");
-            
-            
+           formTimer.Start(); 
         }
-        void getTemp(string Tet)
+
+        //get new te mp every 2 secs
+        private void formTimer_Tick(object sender, EventArgs e)
         {
-            //terminal.AppendText(Tet);
-            //if(temp)
+            sendCommand(serialPort, "T");
+
+            string tempT = serialPort.ReadLine();
+            if (tempT.Length > 0)
+            {
+                string tempX = tempT.Substring((tempT.Length - 5), 5);
+                lblTemp.Text = tempX;
+            }
         }
 
         private void btnMotorFwdRev_Click(object sender, EventArgs e)
@@ -636,5 +645,7 @@ namespace CTEC3426_2015
             string inputID = txtOutgoing.Text;
             sendCommand(serialPort, "E" + inputID);
         }
+
+       
     }
 }

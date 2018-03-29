@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.portNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,6 +119,8 @@
             this.lblHeaterStatus = new System.Windows.Forms.Label();
             this.lblTemp = new System.Windows.Forms.Label();
             this.lblTemperature = new System.Windows.Forms.Label();
+            this.formTimer = new System.Windows.Forms.Timer(this.components);
+            this.lblDegrees = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.terminalTab.SuspendLayout();
@@ -797,6 +800,7 @@
             // 
             // gbStatus
             // 
+            this.gbStatus.Controls.Add(this.lblDegrees);
             this.gbStatus.Controls.Add(this.btnGetTemp);
             this.gbStatus.Controls.Add(this.lblMDirection);
             this.gbStatus.Controls.Add(this.lblDirection);
@@ -831,7 +835,7 @@
             // 
             // btnGetTemp
             // 
-            this.btnGetTemp.Location = new System.Drawing.Point(158, 33);
+            this.btnGetTemp.Location = new System.Drawing.Point(179, 35);
             this.btnGetTemp.Name = "btnGetTemp";
             this.btnGetTemp.Size = new System.Drawing.Size(75, 23);
             this.btnGetTemp.TabIndex = 33;
@@ -1079,6 +1083,21 @@
             this.lblTemperature.TabIndex = 0;
             this.lblTemperature.Text = "Temperature:";
             // 
+            // formTimer
+            // 
+            this.formTimer.Interval = 2000;
+            this.formTimer.Tick += new System.EventHandler(this.formTimer_Tick);
+            // 
+            // lblDegrees
+            // 
+            this.lblDegrees.AutoSize = true;
+            this.lblDegrees.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDegrees.Location = new System.Drawing.Point(158, 36);
+            this.lblDegrees.Name = "lblDegrees";
+            this.lblDegrees.Size = new System.Drawing.Size(20, 20);
+            this.lblDegrees.TabIndex = 34;
+            this.lblDegrees.Text = "C";
+            // 
             // CTEC3426
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1202,6 +1221,8 @@
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnGetTemp;
         private System.Windows.Forms.Label lblSMSMessage;
+        private System.Windows.Forms.Timer formTimer;
+        private System.Windows.Forms.Label lblDegrees;
     }
 }
 
