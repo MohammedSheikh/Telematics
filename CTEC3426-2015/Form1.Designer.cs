@@ -48,6 +48,7 @@
             this.terminalTab = new System.Windows.Forms.TabPage();
             this.terminal = new System.Windows.Forms.RichTextBox();
             this.canvas = new System.Windows.Forms.TabPage();
+            this.txtSetTemp = new System.Windows.Forms.TextBox();
             this.btnReset = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.gbCAN = new System.Windows.Forms.GroupBox();
@@ -125,6 +126,7 @@
             this.lblTemp = new System.Windows.Forms.Label();
             this.lblTemperature = new System.Windows.Forms.Label();
             this.formTimer = new System.Windows.Forms.Timer(this.components);
+            this.btnSetTemp = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.terminalTab.SuspendLayout();
@@ -295,6 +297,8 @@
             // 
             // canvas
             // 
+            this.canvas.Controls.Add(this.btnSetTemp);
+            this.canvas.Controls.Add(this.txtSetTemp);
             this.canvas.Controls.Add(this.btnReset);
             this.canvas.Controls.Add(this.label2);
             this.canvas.Controls.Add(this.gbCAN);
@@ -309,6 +313,13 @@
             this.canvas.TabIndex = 1;
             this.canvas.Text = "Controls";
             this.canvas.UseVisualStyleBackColor = true;
+            // 
+            // txtSetTemp
+            // 
+            this.txtSetTemp.Location = new System.Drawing.Point(449, 47);
+            this.txtSetTemp.Name = "txtSetTemp";
+            this.txtSetTemp.Size = new System.Drawing.Size(100, 20);
+            this.txtSetTemp.TabIndex = 7;
             // 
             // btnReset
             // 
@@ -1146,6 +1157,16 @@
             this.formTimer.Interval = 2000;
             this.formTimer.Tick += new System.EventHandler(this.formTimer_Tick);
             // 
+            // btnSetTemp
+            // 
+            this.btnSetTemp.Location = new System.Drawing.Point(449, 8);
+            this.btnSetTemp.Name = "btnSetTemp";
+            this.btnSetTemp.Size = new System.Drawing.Size(75, 23);
+            this.btnSetTemp.TabIndex = 8;
+            this.btnSetTemp.Text = "button1";
+            this.btnSetTemp.UseVisualStyleBackColor = true;
+            this.btnSetTemp.Click += new System.EventHandler(this.btnSetTemp_Click);
+            // 
             // CTEC3426
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1275,6 +1296,8 @@
         private System.Windows.Forms.Label lblFilterStatus;
         private System.Windows.Forms.Label lblMaskStatus;
         private System.Windows.Forms.Label lblIncomingStatus;
+        private System.Windows.Forms.TextBox txtSetTemp;
+        private System.Windows.Forms.Button btnSetTemp;
     }
 }
 

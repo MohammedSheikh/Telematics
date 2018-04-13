@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.IO;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CTEC3426_2015
 {
@@ -29,6 +30,12 @@ namespace CTEC3426_2015
         int[] array = new int[7];
         string Id;
         string bytes = "00000000000000";
+        string conv;
+        string test;
+        int declare_value;
+        int declare_value1;
+        int templimit;
+        bool temperatureprog = false;
 
         public CTEC3426()
         {
@@ -285,38 +292,254 @@ namespace CTEC3426_2015
                 delimiter = delimStr.ToCharArray();
                 String[] data = dataStr.Split(delimiter);
 
-               
+
 
                 /* The identifier and the data are now available to
                 use safely in the form trhough the variables data and
                 identifier. Just create a new method, and call it with
                 identifier and data as parameters. */
 
-                    /* The data is stored in an array of string. Each string
-                    in the array represent a byte of data, with data[0] being
-                    the most significant byte and data[7] the least
-                    significant byte. Be careful though, you cannot use the
-                    data directly as it is encoded as a string. You should 
-                    first convert the string representation of the data into
-                    a variable of the relevant type (byte, integer, char, etc).
-                    For instance, the first byte contains information about
-                    the Motor, heater and the switches. If data[0] contains "11",
-                    you should convert this string into a byte which contains the
-                    value 0x11, or an integer which contains the value 17 to be able
-                    to manipulate it efficiently.
-                    I suggest you to have a look at the class Convert on MSDN.
-                    And Google is still you friend ;-) */
+                /* The data is stored in an array of string. Each string
+                in the array represent a byte of data, with data[0] being
+                the most significant byte and data[7] the least
+                significant byte. Be careful though, you cannot use the
+                data directly as it is encoded as a string. You should 
+                first convert the string representation of the data into
+                a variable of the relevant type (byte, integer, char, etc).
+                For instance, the first byte contains information about
+                the Motor, heater and the switches. If data[0] contains "11",
+                you should convert this string into a byte which contains the
+                value 0x11, or an integer which contains the value 17 to be able
+                to manipulate it efficiently.
+                I suggest you to have a look at the class Convert on MSDN.
+                And Google is still you friend ;-) */
 
-                    /* /!\ This function will crash if you manage to retrieve a line
-                    starting with the character # and which doesn't contain the 
-                    appropriate number character. This case may occur if you use the
-                    terminal emulator to communicate directly to the GSM modem.
-                    Fixing this function is not my priority, so it will stay like
-                    that, but feel free to fix it yourself. */
+                /* /!\ This function will crash if you manage to retrieve a line
+                starting with the character # and which doesn't contain the 
+                appropriate number character. This case may occur if you use the
+                terminal emulator to communicate directly to the GSM modem.
+                Fixing this function is not my priority, so it will stay like
+                that, but feel free to fix it yourself. */
+
+                /*kepyad*/
+                int Key_Press = Convert.ToInt32(data[1]);
+
+                switch (Key_Press)
+                {
+
+                    case 30:
+
+                        txtFilter.Text = "0";
+                        ChangeColor(Color.DarkRed);
+
+
+                        break;
+
+                    //case 31:
+
+                    //    key_pressed_status.Text = "1";
+
+                    //    break;
+
+                    //case 32:
+
+                    //    key_pressed_status.Text = "2";
+
+                    //    break;
+
+                    //case 33:
+
+                    //    key_pressed_status.Text = "3";
+
+                    //    break;
+
+                    //case 34:
+
+                    //    key_pressed_status.Text = "4";
+
+                    //    break;
+
+                    //case 35:
+
+                    //    key_pressed_status.Text = "5";
+
+                    //    break;
+
+                    //case 36:
+
+                    //    key_pressed_status.Text = "6";
+
+                    //    break;
+
+                    //case 37:
+
+                    //    key_pressed_status.Text = "7";
+
+                    //    break;
+
+                    //case 38:
+
+                    //    key_pressed_status.Text = "8";
+
+                    //    break;
+
+
+                    //case 39:
+
+                    //    key_pressed_status.Text = "9";
+
+                    //    break;
+
+
+                    //case 53:
+
+                    //    key_pressed_status.Text = "*";
+
+                    //    break;
+
+
+                    //case 48:
+
+                    //    key_pressed_status.Text = "#";
+
+
+                    //    break;
+
+                    default:
+
+                        lblSMSMessage.Text = "No key is being pressed";
+
+                        break;
+
+                }
+
+                /*swicthes*/
+                for (int i = 0; i < data.Length; i++)
+                {
+                    String b3 = Convert.ToString(data[0]);
+                    //String b4 = Convert.ToString(data[3]);
+                    //array 2 - byte 3 contains information about the temperature.
+
+                    //Converitng the hex into decimal which displays in the label as 'tempstatus'
+                    declare_value = int.Parse(b3, System.Globalization.NumberStyles.HexNumber);
+                    //declare_value1 = int.Parse(b4, System.Globalization.NumberStyles.HexNumber);
+                    test = Convert.ToString("0" + declare_value);
+                    //lblTest.Text = test;
+                    if (test == "00")
+                    {
+                        lblSwitch1OnOff.Text = "Off";
+                        lblSwitch2OnOff.Text = "Off";
+                        lblSwitch3OnOff.Text = "Off";
+                        lblSwitch4OnOff.Text = "Off";
+                    }
+                    else if (test == "01")
+                    {
+                        lblSwitch1OnOff.Text = "On";
+                        lblSwitch2OnOff.Text = "Off";
+                        lblSwitch3OnOff.Text = "Off";
+                        lblSwitch4OnOff.Text = "Off";
+
+                        //lblTest.Text = "x";
+                    }
+                    else if (test == "02")
+                    {
+                        lblSwitch2OnOff.Text = "On";
+                        lblSwitch1OnOff.Text = "Off";
+                        lblSwitch3OnOff.Text = "Off";
+                        lblSwitch4OnOff.Text = "Off";
+                        //lblTest.Text = "x";
+                    }
+                    else if (test == "04")
+                    {
+                        lblSwitch3OnOff.Text = "On";
+                        lblSwitch1OnOff.Text = "Off";
+                        lblSwitch2OnOff.Text = "Off";
+                        lblSwitch4OnOff.Text = "Off";
+                        //lblTest.Text = "x";
+                    }
+                    else if (test == "08")
+                    {
+                        lblSwitch4OnOff.Text = "On";
+                        lblSwitch1OnOff.Text = "Off";
+                        lblSwitch2OnOff.Text = "Off";
+                        lblSwitch3OnOff.Text = "Off";
+                        //lblTest.Text = "x";
+                    }
+                    //statushm.Text = conv;
+                }
+
+                /*temp*/
+                for (int i = 0; i < data.Length; i++)
+                {
+                    String b3 = Convert.ToString(data[2]);
+                    String b4 = Convert.ToString(data[3]);
+                    //array 2 - byte 3 contains information about the temperature.
+
+                    //Converitng the hex into decimal which displays in the label as 'tempstatus'
+                    declare_value = int.Parse(b3, System.Globalization.NumberStyles.HexNumber);
+                    declare_value1 = int.Parse(b4, System.Globalization.NumberStyles.HexNumber);
+                    conv = Convert.ToString(declare_value + "." + declare_value1);
+                    lblTemp.Text = conv;
+                    //statushm.Text = conv;
+                }
+
+                //automatic temperature control function with the array changing the messages according to the temperature level
+
+                for (int i = 1; i < data.Length; i++)
+
+                    if (temperatureprog == true)
+                    {
+
+
+                        //If it less than the declared value, the heater turns on
+
+                        if (templimit > declare_value && !string.IsNullOrEmpty(txtSetTemp.Text))
+                        {
+                            array[6] = 0x01;
+                            array[5] = 0x00;
+                            lblSMSMessage.Text = "less than";
+                            Remote_func();
+                        }
+
+                        //If it greater than the declared value, motor turns on
+
+                        else if (templimit < declare_value)
+                        {
+                            array[5] = 0x02;
+                            array[6] = 0x00;
+                            lblSMSMessage.Text = "more than than";
+                            Remote_func();
+                        }
+
+                        else if (templimit == declare_value && !string.IsNullOrEmpty(txtSetTemp.Text))
+                        {
+                            //array[5] = 0x00;
+                            //array[6] = 0x00;
+                            lblSMSMessage.Text = "nothing";
+                            Remote_func();
+                        }
+
+                        //else if (lblsetTemp.Text == "")
+                        //{
+
+                        //}
+
+
+                    }
             }
         }
 
-        
+        private async void ChangeColor(Color new_color)
+        {
+            var original_color = btn0.BackColor;
+
+            btn0.BackColor = new_color;
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            btn0.BackColor = original_color;
+        }
+
 
         //toggle motor
         private void btnMotorOnOff_Click(object sender, EventArgs e)
@@ -970,6 +1193,26 @@ namespace CTEC3426_2015
         private void txtMask_TextChanged(object sender, EventArgs e)
         {
             btnSetMask.Enabled = true;
+        }
+
+        private void btnSetTemp_Click(object sender, EventArgs e)
+        {
+            String settemp = txtSetTemp.Text;
+
+            templimit = Convert.ToInt32(settemp);
+            //txtThreshold.Text = settemp;
+
+            if (settemp.Length > 0)
+            {
+                temperatureprog = true;
+            }
+
+            else
+            {
+
+                temperatureprog = false;
+
+            }
         }
     }
 }
