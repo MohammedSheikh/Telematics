@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.IO;
 using System.Drawing;
+using System.Linq;
 
 namespace CTEC3426_2015
 {
@@ -23,6 +24,12 @@ namespace CTEC3426_2015
         StopBits _StopBits = StopBits.One;
         Parity _Parity = Parity.None;
 
+        string hash = "#";
+        string outgoingID;
+        int[] array = new int[7];
+        string Id;
+        string bytes = "00000000000000";
+
         public CTEC3426()
         {
             InitializeComponent();
@@ -34,6 +41,20 @@ namespace CTEC3426_2015
             reading = false;
             this.readThread.Abort();
             serialPort.Close();
+            //array[0] = 0x00;
+            //Remote_func();
+
+
+        }
+
+        public void Remote_func()
+        {
+
+            int cal = array.Sum();
+            string hex = cal.ToString("x2");
+
+
+            sendCommand(serialPort, "#" + lblBroadCastID.Text + hex + bytes);
 
         }
 
@@ -41,8 +62,10 @@ namespace CTEC3426_2015
         {
             btnMotorFwdRev.Enabled = false;
             lblMDirection.Text = "";
-
-            
+            btnOutgoing.Enabled = false;
+            btnIncoming.Enabled = false;
+            btnSetFilter.Enabled = false;
+            btnSetMask.Enabled = false;
         }
 
         /* Initialise the toolbar menu */
@@ -190,17 +213,44 @@ namespace CTEC3426_2015
 
         private void btnHeater_Click(object sender, EventArgs e)
         {
-
-            if (lblHStatus.Text == "Off")
+            try
             {
-                sendCommand(serialPort, "H");
-                lblHStatus.Text = "On";
+                if(lblBroadCastID.Text == "")
+                {
+                    if (lblHStatus.Text == "Off")
+                    {
+                        sendCommand(serialPort, "H");
+                        lblHStatus.Text = "On";
+                    }
+                    else
+                    {
+                        sendCommand(serialPort, "C");
+                        lblHStatus.Text = "Off";
+                    }
+                }
+                else
+                {
+                    if (lblHStatus.Text == "Off")
+                    {
+                        array[6] = 0x01;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0100000000000000");
+                        lblHStatus.Text = "On";
+                    }
+                    else
+                    {
+                        array[6] = 0x00;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0500000000000000");
+                        lblHStatus.Text = "Off";
+                    }
+                }
+              
             }
-            else
+            catch (Exception ex)
             {
-                sendCommand(serialPort, "C");
-                lblHStatus.Text = "Off";
-            }
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }          
         }
 
 
@@ -271,85 +321,249 @@ namespace CTEC3426_2015
         //toggle motor
         private void btnMotorOnOff_Click(object sender, EventArgs e)
         {
-            if (lblMStatus.Text == "Off")
+            try
             {
-                sendCommand(serialPort, "F");
-                lblMStatus.Text = "On";
-                btnMotorFwdRev.Enabled = true;
-                btnMotorFwdRev.Text = "Motor Reverse";
-                lblMDirection.Text = "Forward";
+                if (lblMStatus.Text == "Off")
+                {
+                    if(lblBroadCastID.Text == "")
+                    {
+                        sendCommand(serialPort, "F");
+                    }
+                    else
+                    {
+                        array[5] = 0x02;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0200000000000000");
+                    }
+
+                    lblMStatus.Text = "On";
+                    btnMotorFwdRev.Enabled = true;
+                    btnMotorFwdRev.Text = "Motor Reverse";
+                    lblMDirection.Text = "Forward";
+                }
+                else
+                {
+                    if (lblBroadCastID.Text == "")
+                    {
+                        sendCommand(serialPort, "S");
+                    }
+                    else
+                    {
+                        array[5] = 0x00;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
+                    }
+                    lblMStatus.Text = "Off";
+                    btnMotorFwdRev.Enabled = false;
+                    btnMotorFwdRev.Text = "Motor (Fwd/Rev)";
+                    lblMDirection.Text = "";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                sendCommand(serialPort, "S");
-                lblMStatus.Text = "Off";
-                btnMotorFwdRev.Enabled = false;
-                btnMotorFwdRev.Text = "Motor (Fwd/Rev)";
-                lblMDirection.Text = "";
-            }
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }     
         }
 
         private void btnLED1OnOff_Click(object sender, EventArgs e)
-        {
-            if (lblLED1OnOff.Text == "Off")
+        {        
+            try
             {
-                sendCommand(serialPort, "0");
-                lblLED1OnOff.Text = "On";
+                if (lblBroadCastID.Text == "")
+                {
+                    if (lblLED1OnOff.Text == "Off")
+                    {
+                        sendCommand(serialPort, "0");
+                        lblLED1OnOff.Text = "On";
+                    }
+                    else
+                    {
+                        sendCommand(serialPort, "0");
+                        lblLED1OnOff.Text = "Off";
+                    }
+                }
+                else
+                {
+                    if (lblLED1OnOff.Text == "Off")
+                    {
+                        array[0] = 0x10;
+                        Remote_func();
+                        lblLED1OnOff.Text = "On";
+                    }
+                    else
+                    {
+                        array[0] = 0x00;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
+                        lblLED1OnOff.Text = "Off";
+                    }
+                    
+                }
             }
-            else
+
+            catch (Exception ex)
             {
-                sendCommand(serialPort, "0");
-                lblLED1OnOff.Text = "Off";
+                lblSMSMessage.Text = "Please connect to the serial port";
             }
+          
         }
 
         private void btnLED2OnOff_Click(object sender, EventArgs e)
         {
-            if (lblLED2OnOff.Text == "Off")
+            try
             {
-                sendCommand(serialPort, "1");
-                lblLED2OnOff.Text = "On";
+                if (lblBroadCastID.Text == "")
+                {
+                    if (lblLED2OnOff.Text == "Off")
+                    {
+                        sendCommand(serialPort, "1");
+                        lblLED2OnOff.Text = "On";
+                    }
+                    else
+                    {
+                        sendCommand(serialPort, "1");
+                        lblLED2OnOff.Text = "Off";
+                    }
+                }
+                else
+                {
+                    if (lblLED2OnOff.Text == "Off")
+                    {
+                        array[1] = 0x20;
+                        Remote_func();
+                       // sendCommand(serialPort, hash + lblBroadCastID.Text + "2000000000000000");
+                        lblLED2OnOff.Text = "On";
+                    }
+                    else
+                    {
+                        array[1] = 0x00;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
+                        lblLED2OnOff.Text = "Off";
+                    }
+                    
+                }
             }
-            else
+            catch (Exception ex)
             {
-                sendCommand(serialPort, "1");
-                lblLED2OnOff.Text = "Off";
+                lblSMSMessage.Text = "Please connect to the serial port";
             }
         }
 
         private void btnLED3OnOff_Click(object sender, EventArgs e)
         {
-            if (lblLED3OnOff.Text == "Off")
+            try
             {
-                sendCommand(serialPort, "2");
-                lblLED3OnOff.Text = "On";
+                if (lblBroadCastID.Text == "")
+                {
+                    if (lblLED3OnOff.Text == "Off")
+                    {
+                        sendCommand(serialPort, "2");
+                        lblLED3OnOff.Text = "On";
+                    }
+                    else
+                    {
+                        sendCommand(serialPort, "2");
+                        lblLED3OnOff.Text = "Off";
+                    }
+                }
+                else
+                {
+                    if (lblLED3OnOff.Text == "Off")
+                    {
+                        array[2] = 0x40;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "4000000000000000");
+                        lblLED3OnOff.Text = "On";
+                    }
+                    else
+                    {
+                        array[2] = 0x00;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
+                        lblLED3OnOff.Text = "Off";
+                    }
+                    
+                }
             }
-            else
+
+            catch (Exception ex)
             {
-                sendCommand(serialPort, "2");
-                lblLED3OnOff.Text = "Off";
+                lblSMSMessage.Text = "Please connect to the serial port";
             }
         }
 
         private void btnLED4OnOff_Click(object sender, EventArgs e)
         {
-            if (lblLED4OnOff.Text == "Off")
+            try
             {
-                sendCommand(serialPort, "3");
-                lblLED4OnOff.Text = "On";
+                if (lblBroadCastID.Text == "")
+                {
+                    if (lblLED4OnOff.Text == "Off")
+                    {
+                        sendCommand(serialPort, "3");
+                        lblLED4OnOff.Text = "On";
+                    }
+                    else
+                    {
+                        sendCommand(serialPort, "3");
+                        lblLED4OnOff.Text = "Off";
+                    }
+                }
+                else
+                {
+                    if (lblLED4OnOff.Text == "Off")
+                    {
+                        array[3] = 0x80;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "8000000000000000");
+                        lblLED4OnOff.Text = "On";
+                    }
+                    else
+                    {
+                        array[3] = 0x00;
+                        Remote_func();
+                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
+                        lblLED4OnOff.Text = "Off";
+                    }
+                    
+                }
             }
-            else
+
+            catch (Exception ex)
             {
-                sendCommand(serialPort, "3");
-                lblLED4OnOff.Text = "Off";
+                lblSMSMessage.Text = "Please connect to the serial port";
             }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            ClearFields();
-            ClearLabels();
-            sendCommand(serialPort, "@");
+            try
+            {
+                ClearFields();
+                ClearLabels();
+                ClearStatuses();
+                if (lblBroadCastID.Text == "")
+                {
+                    sendCommand(serialPort, "@");
+                }
+                else
+                {
+                    sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
+                }
+            }
+            catch (Exception ex)
+            {
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }
+        }
+
+        void ClearStatuses()
+        {
+            lblMaskStatus.Text = "";
+            lblFilterStatus.Text = "";
+            lblBroadCastID.Text = "";
+            lblIncomingStatus.Text = "";
         }
 
         void ClearFields()
@@ -361,6 +575,10 @@ namespace CTEC3426_2015
             txtSMS.Text = "";
             btnMotorFwdRev.Text = "Motor(Fwd / Rev)";
             txtSMS.Text = "";
+            btnOutgoing.Enabled = false;
+            btnIncoming.Enabled = false;
+            btnSetFilter.Enabled = false;
+            btnSetMask.Enabled = false;
         }
 
         void ClearLabels()
@@ -383,7 +601,15 @@ namespace CTEC3426_2015
 
         private void btnGetTemp_Click(object sender, EventArgs e)
         {
-           formTimer.Start(); 
+            try
+            {
+                formTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }
+
         }
 
         //get new te mp every 2 secs
@@ -394,42 +620,74 @@ namespace CTEC3426_2015
             string tempT = serialPort.ReadLine();
             if (tempT.Length > 0)
             {
-                string tempX = tempT.Substring((tempT.Length - 5), 5);
-                lblTemp.Text = tempX;
+                try
+                {
+                    string tempX = tempT.Substring((tempT.Length - 5), 5);
+                    lblTemp.Text = tempX;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
         }
 
         private void btnMotorFwdRev_Click(object sender, EventArgs e)
         {
-            
-            if (btnMotorFwdRev.Text == "Motor Forward")
+
+            try
             {
-                sendCommand(serialPort, "F");
-                btnMotorFwdRev.Text = "Motor Reverse";
-                lblMDirection.Text = "Forward";
+                if (btnMotorFwdRev.Text == "Motor Forward")
+                {
+                    array[5] = 0x02;                    
+                    Remote_func();
+                    //sendCommand(serialPort, "F");
+                    btnMotorFwdRev.Text = "Motor Reverse";
+                    lblMDirection.Text = "Forward";
+                }
+                else if (btnMotorFwdRev.Text == "Motor Reverse")
+                {
+                    array[5] = 0x06;
+                    Remote_func();
+                    //sendCommand(serialPort, "R");
+                    btnMotorFwdRev.Text = "Motor Forward";
+                    lblMDirection.Text = "Reverse";
+                }
             }
-            else if (btnMotorFwdRev.Text == "Motor Reverse")
+
+            catch (Exception ex)
             {
-                sendCommand(serialPort, "R");
-                btnMotorFwdRev.Text = "Motor Forward";
-                lblMDirection.Text = "Reverse";
+                lblSMSMessage.Text = "Please connect to the serial port";
             }
+
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            string number = txtSMS.Text; 
-
-            if(number.Length != 11)
+            try
             {
-               lblSMSMessage.ForeColor = Color.Red;
-               lblSMSMessage.Text = "Mobile Number needs to be 11 Chars";
+                SendMessage();
+            }         
+            catch (Exception ex)
+            {
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }
+        }
+
+        void SendMessage()
+        {
+            string number = txtSMS.Text;
+
+            if (number.Length != 11)
+            {
+                lblSMSMessage.ForeColor = Color.Red;
+                lblSMSMessage.Text = "Mobile Number needs to be 11 Chars";
             }
             else
             {
-               lblSMSMessage.ForeColor = Color.Green;
-               lblSMSMessage.Text = "SMS has been sent";
-             }
+                lblSMSMessage.ForeColor = Color.Green;
+                lblSMSMessage.Text = "SMS has been sent";
+            }
 
             string heater = "";
 
@@ -554,11 +812,11 @@ namespace CTEC3426_2015
 
             string message =
 
-                "T=" + lblTemp.Text + Environment.NewLine +                
+                "T=" + lblTemp.Text + Environment.NewLine +
                 "H=" + heater + Environment.NewLine +
                 "LEDs=" + ledOne + ", " + ledTwo + ", " + ledThree + ", " + ledFour + ", " + Environment.NewLine +
                 "M=" + motor + ", " + "MD=" + motorDirection + Environment.NewLine +
-                "S=" +  switchOne +  ", " + switchTwo + ", " + switchThree + ", " + switchFour;
+                "S=" + switchOne + ", " + switchTwo + ", " + switchThree + ", " + switchFour;
 
             sendCommand(serialPort, "O");
             sendCommand(serialPort, "AT+CMGS=" + number + "\r");
@@ -567,6 +825,7 @@ namespace CTEC3426_2015
 
             txtSMS.Text = "";
         }
+
 
         private void btnSwitch1OnOff_Click(object sender, EventArgs e)
         {
@@ -624,28 +883,93 @@ namespace CTEC3426_2015
 
         private void btnSetFilter_Click(object sender, EventArgs e)
         {
-            string canFilter = txtFilter.Text;
-            sendCommand(serialPort, "A" + canFilter);
+            try
+            {
+                string canFilter = txtFilter.Text;
+                sendCommand(serialPort, "A" + canFilter);
+                lblFilterStatus.Text = txtFilter.Text.ToUpper();
+                btnSetFilter.Enabled = false;
+                txtFilter.Text = "";
+                ClearLabels();
+            }
+            catch (Exception ex)
+            {
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }
+
         }
 
         private void btnSetMask_Click(object sender, EventArgs e)
         {
-            string canMask = txtMask.Text;
-            sendCommand(serialPort, "M" + canMask);
+            try
+            {
+                string canMask = txtMask.Text;
+                sendCommand(serialPort, "M" + canMask);
+                lblMaskStatus.Text = txtMask.Text.ToUpper();
+                btnSetMask.Enabled = false;
+                txtMask.Text = "";
+                ClearLabels();
+            }
+            catch (Exception ex)
+            {
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }
         }
 
         private void btnOutgoing_Click(object sender, EventArgs e)
         {
-            string broadcastID =txtOutgoing.Text;
-            sendCommand(serialPort, "B" + broadcastID);
+            try
+            {
+                outgoingID = txtOutgoing.Text;
+                lblBroadCastID.Text = txtOutgoing.Text.ToUpper();
+                btnOutgoing.Enabled = false;
+                txtOutgoing.Text = "";
+                ClearLabels();
+            }
+            catch(Exception ex)
+            {
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }
+            
+            
         }
 
         private void btnIncoming_Click(object sender, EventArgs e)
         {
-            string inputID = txtOutgoing.Text;
-            sendCommand(serialPort, "E" + inputID);
+            try
+            {
+                string inputID = txtIncoming.Text;
+                sendCommand(serialPort, "E" + inputID);
+                lblIncomingStatus.Text = txtIncoming.Text.ToUpper();
+                btnIncoming.Enabled = false;
+                txtIncoming.Text = "";
+                ClearLabels();
+            }
+
+            catch (Exception ex)
+            {
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }
         }
 
-       
+        private void txtOutgoing_TextChanged(object sender, EventArgs e)
+        {
+            btnOutgoing.Enabled = true;
+        }
+
+        private void txtIncoming_TextChanged(object sender, EventArgs e)
+        {
+            btnIncoming.Enabled = true;
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            btnSetFilter.Enabled = true;
+        }
+
+        private void txtMask_TextChanged(object sender, EventArgs e)
+        {
+            btnSetMask.Enabled = true;
+        }
     }
 }

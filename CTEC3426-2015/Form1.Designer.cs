@@ -51,6 +51,10 @@
             this.btnReset = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.gbCAN = new System.Windows.Forms.GroupBox();
+            this.lblFilterStatus = new System.Windows.Forms.Label();
+            this.lblMaskStatus = new System.Windows.Forms.Label();
+            this.lblIncomingStatus = new System.Windows.Forms.Label();
+            this.lblBroadCastID = new System.Windows.Forms.Label();
             this.lblIncomingID = new System.Windows.Forms.Label();
             this.btnIncoming = new System.Windows.Forms.Button();
             this.txtIncoming = new System.Windows.Forms.TextBox();
@@ -94,6 +98,7 @@
             this.btn2 = new System.Windows.Forms.Button();
             this.btn1 = new System.Windows.Forms.Button();
             this.gbStatus = new System.Windows.Forms.GroupBox();
+            this.lblDegrees = new System.Windows.Forms.Label();
             this.btnGetTemp = new System.Windows.Forms.Button();
             this.lblMDirection = new System.Windows.Forms.Label();
             this.lblDirection = new System.Windows.Forms.Label();
@@ -120,7 +125,6 @@
             this.lblTemp = new System.Windows.Forms.Label();
             this.lblTemperature = new System.Windows.Forms.Label();
             this.formTimer = new System.Windows.Forms.Timer(this.components);
-            this.lblDegrees = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.terminalTab.SuspendLayout();
@@ -330,6 +334,10 @@
             // 
             // gbCAN
             // 
+            this.gbCAN.Controls.Add(this.lblFilterStatus);
+            this.gbCAN.Controls.Add(this.lblMaskStatus);
+            this.gbCAN.Controls.Add(this.lblIncomingStatus);
+            this.gbCAN.Controls.Add(this.lblBroadCastID);
             this.gbCAN.Controls.Add(this.lblIncomingID);
             this.gbCAN.Controls.Add(this.btnIncoming);
             this.gbCAN.Controls.Add(this.txtIncoming);
@@ -348,6 +356,42 @@
             this.gbCAN.TabIndex = 4;
             this.gbCAN.TabStop = false;
             this.gbCAN.Text = "CAN Controls";
+            // 
+            // lblFilterStatus
+            // 
+            this.lblFilterStatus.AutoSize = true;
+            this.lblFilterStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFilterStatus.Location = new System.Drawing.Point(175, 32);
+            this.lblFilterStatus.Name = "lblFilterStatus";
+            this.lblFilterStatus.Size = new System.Drawing.Size(0, 17);
+            this.lblFilterStatus.TabIndex = 18;
+            // 
+            // lblMaskStatus
+            // 
+            this.lblMaskStatus.AutoSize = true;
+            this.lblMaskStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaskStatus.Location = new System.Drawing.Point(175, 182);
+            this.lblMaskStatus.Name = "lblMaskStatus";
+            this.lblMaskStatus.Size = new System.Drawing.Size(0, 17);
+            this.lblMaskStatus.TabIndex = 17;
+            // 
+            // lblIncomingStatus
+            // 
+            this.lblIncomingStatus.AutoSize = true;
+            this.lblIncomingStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIncomingStatus.Location = new System.Drawing.Point(175, 494);
+            this.lblIncomingStatus.Name = "lblIncomingStatus";
+            this.lblIncomingStatus.Size = new System.Drawing.Size(0, 17);
+            this.lblIncomingStatus.TabIndex = 16;
+            // 
+            // lblBroadCastID
+            // 
+            this.lblBroadCastID.AutoSize = true;
+            this.lblBroadCastID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBroadCastID.Location = new System.Drawing.Point(175, 336);
+            this.lblBroadCastID.Name = "lblBroadCastID";
+            this.lblBroadCastID.Size = new System.Drawing.Size(0, 17);
+            this.lblBroadCastID.TabIndex = 15;
             // 
             // lblIncomingID
             // 
@@ -377,6 +421,7 @@
             this.txtIncoming.Name = "txtIncoming";
             this.txtIncoming.Size = new System.Drawing.Size(262, 33);
             this.txtIncoming.TabIndex = 12;
+            this.txtIncoming.TextChanged += new System.EventHandler(this.txtIncoming_TextChanged);
             // 
             // lblOutgoingID
             // 
@@ -406,6 +451,7 @@
             this.txtOutgoing.Name = "txtOutgoing";
             this.txtOutgoing.Size = new System.Drawing.Size(262, 33);
             this.txtOutgoing.TabIndex = 9;
+            this.txtOutgoing.TextChanged += new System.EventHandler(this.txtOutgoing_TextChanged);
             // 
             // lblMask
             // 
@@ -435,6 +481,7 @@
             this.txtMask.Name = "txtMask";
             this.txtMask.Size = new System.Drawing.Size(262, 33);
             this.txtMask.TabIndex = 6;
+            this.txtMask.TextChanged += new System.EventHandler(this.txtMask_TextChanged);
             // 
             // lblFilter
             // 
@@ -464,6 +511,7 @@
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(262, 33);
             this.txtFilter.TabIndex = 3;
+            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
             // 
             // gbSMS
             // 
@@ -833,6 +881,16 @@
             this.gbStatus.TabStop = false;
             this.gbStatus.Text = "Board Status";
             // 
+            // lblDegrees
+            // 
+            this.lblDegrees.AutoSize = true;
+            this.lblDegrees.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDegrees.Location = new System.Drawing.Point(158, 37);
+            this.lblDegrees.Name = "lblDegrees";
+            this.lblDegrees.Size = new System.Drawing.Size(20, 20);
+            this.lblDegrees.TabIndex = 34;
+            this.lblDegrees.Text = "C";
+            // 
             // btnGetTemp
             // 
             this.btnGetTemp.Location = new System.Drawing.Point(179, 35);
@@ -1088,16 +1146,6 @@
             this.formTimer.Interval = 2000;
             this.formTimer.Tick += new System.EventHandler(this.formTimer_Tick);
             // 
-            // lblDegrees
-            // 
-            this.lblDegrees.AutoSize = true;
-            this.lblDegrees.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDegrees.Location = new System.Drawing.Point(158, 37);
-            this.lblDegrees.Name = "lblDegrees";
-            this.lblDegrees.Size = new System.Drawing.Size(20, 20);
-            this.lblDegrees.TabIndex = 34;
-            this.lblDegrees.Text = "C";
-            // 
             // CTEC3426
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1223,6 +1271,10 @@
         private System.Windows.Forms.Label lblSMSMessage;
         private System.Windows.Forms.Timer formTimer;
         private System.Windows.Forms.Label lblDegrees;
+        private System.Windows.Forms.Label lblBroadCastID;
+        private System.Windows.Forms.Label lblFilterStatus;
+        private System.Windows.Forms.Label lblMaskStatus;
+        private System.Windows.Forms.Label lblIncomingStatus;
     }
 }
 
