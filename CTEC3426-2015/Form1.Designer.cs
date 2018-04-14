@@ -1182,11 +1182,6 @@
             this.lblTemperature.TabIndex = 0;
             this.lblTemperature.Text = "Temperature:";
             // 
-            // formTimer
-            // 
-            this.formTimer.Interval = 2000;
-            this.formTimer.Tick += new System.EventHandler(this.formTimer_Tick);
-            // 
             // CTEC3426
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
