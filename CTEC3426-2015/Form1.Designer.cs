@@ -48,14 +48,17 @@
             this.terminalTab = new System.Windows.Forms.TabPage();
             this.terminal = new System.Windows.Forms.RichTextBox();
             this.canvas = new System.Windows.Forms.TabPage();
-            this.txtSetTemp = new System.Windows.Forms.TextBox();
             this.btnReset = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.gbCAN = new System.Windows.Forms.GroupBox();
+            this.lblOutgoingStatus = new System.Windows.Forms.Label();
+            this.lblBroadcastStatus = new System.Windows.Forms.Label();
+            this.lblBroadcastID = new System.Windows.Forms.Label();
+            this.btnBroadcast = new System.Windows.Forms.Button();
+            this.txtBroadcastID = new System.Windows.Forms.TextBox();
             this.lblFilterStatus = new System.Windows.Forms.Label();
             this.lblMaskStatus = new System.Windows.Forms.Label();
             this.lblIncomingStatus = new System.Windows.Forms.Label();
-            this.lblBroadCastID = new System.Windows.Forms.Label();
             this.lblIncomingID = new System.Windows.Forms.Label();
             this.btnIncoming = new System.Windows.Forms.Button();
             this.txtIncoming = new System.Windows.Forms.TextBox();
@@ -74,14 +77,13 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.txtSMS = new System.Windows.Forms.TextBox();
             this.gbControls = new System.Windows.Forms.GroupBox();
+            this.txtSetTemp = new System.Windows.Forms.TextBox();
+            this.btnSetTemp = new System.Windows.Forms.Button();
             this.btnLED4OnOff = new System.Windows.Forms.Button();
+            this.btnControlTemp = new System.Windows.Forms.Button();
             this.btnLED3OnOff = new System.Windows.Forms.Button();
             this.btnLED2OnOff = new System.Windows.Forms.Button();
-            this.btnSwitch2OnOff = new System.Windows.Forms.Button();
             this.btnLED1OnOff = new System.Windows.Forms.Button();
-            this.btnSwitch4OnOff = new System.Windows.Forms.Button();
-            this.btnSwitch3OnOff = new System.Windows.Forms.Button();
-            this.btnSwitch1OnOff = new System.Windows.Forms.Button();
             this.btnMotorFwdRev = new System.Windows.Forms.Button();
             this.btnMotorOnOff = new System.Windows.Forms.Button();
             this.btnHeater = new System.Windows.Forms.Button();
@@ -100,7 +102,6 @@
             this.btn1 = new System.Windows.Forms.Button();
             this.gbStatus = new System.Windows.Forms.GroupBox();
             this.lblDegrees = new System.Windows.Forms.Label();
-            this.btnGetTemp = new System.Windows.Forms.Button();
             this.lblMDirection = new System.Windows.Forms.Label();
             this.lblDirection = new System.Windows.Forms.Label();
             this.lblSwitch4OnOff = new System.Windows.Forms.Label();
@@ -126,7 +127,7 @@
             this.lblTemp = new System.Windows.Forms.Label();
             this.lblTemperature = new System.Windows.Forms.Label();
             this.formTimer = new System.Windows.Forms.Timer(this.components);
-            this.btnSetTemp = new System.Windows.Forms.Button();
+            this.lblKey = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.terminalTab.SuspendLayout();
@@ -297,8 +298,6 @@
             // 
             // canvas
             // 
-            this.canvas.Controls.Add(this.btnSetTemp);
-            this.canvas.Controls.Add(this.txtSetTemp);
             this.canvas.Controls.Add(this.btnReset);
             this.canvas.Controls.Add(this.label2);
             this.canvas.Controls.Add(this.gbCAN);
@@ -314,13 +313,6 @@
             this.canvas.Text = "Controls";
             this.canvas.UseVisualStyleBackColor = true;
             // 
-            // txtSetTemp
-            // 
-            this.txtSetTemp.Location = new System.Drawing.Point(449, 47);
-            this.txtSetTemp.Name = "txtSetTemp";
-            this.txtSetTemp.Size = new System.Drawing.Size(100, 20);
-            this.txtSetTemp.TabIndex = 7;
-            // 
             // btnReset
             // 
             this.btnReset.BackColor = System.Drawing.Color.Red;
@@ -330,7 +322,7 @@
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(173, 42);
             this.btnReset.TabIndex = 6;
-            this.btnReset.Text = "Reset";
+            this.btnReset.Text = "RESET";
             this.btnReset.UseVisualStyleBackColor = false;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
@@ -345,10 +337,14 @@
             // 
             // gbCAN
             // 
+            this.gbCAN.Controls.Add(this.lblOutgoingStatus);
+            this.gbCAN.Controls.Add(this.lblBroadcastStatus);
+            this.gbCAN.Controls.Add(this.lblBroadcastID);
+            this.gbCAN.Controls.Add(this.btnBroadcast);
+            this.gbCAN.Controls.Add(this.txtBroadcastID);
             this.gbCAN.Controls.Add(this.lblFilterStatus);
             this.gbCAN.Controls.Add(this.lblMaskStatus);
             this.gbCAN.Controls.Add(this.lblIncomingStatus);
-            this.gbCAN.Controls.Add(this.lblBroadCastID);
             this.gbCAN.Controls.Add(this.lblIncomingID);
             this.gbCAN.Controls.Add(this.btnIncoming);
             this.gbCAN.Controls.Add(this.txtIncoming);
@@ -368,11 +364,59 @@
             this.gbCAN.TabStop = false;
             this.gbCAN.Text = "CAN Controls";
             // 
+            // lblOutgoingStatus
+            // 
+            this.lblOutgoingStatus.AutoSize = true;
+            this.lblOutgoingStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOutgoingStatus.Location = new System.Drawing.Point(175, 389);
+            this.lblOutgoingStatus.Name = "lblOutgoingStatus";
+            this.lblOutgoingStatus.Size = new System.Drawing.Size(0, 17);
+            this.lblOutgoingStatus.TabIndex = 23;
+            // 
+            // lblBroadcastStatus
+            // 
+            this.lblBroadcastStatus.AutoSize = true;
+            this.lblBroadcastStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBroadcastStatus.Location = new System.Drawing.Point(175, 260);
+            this.lblBroadcastStatus.Name = "lblBroadcastStatus";
+            this.lblBroadcastStatus.Size = new System.Drawing.Size(0, 17);
+            this.lblBroadcastStatus.TabIndex = 22;
+            // 
+            // lblBroadcastID
+            // 
+            this.lblBroadcastID.AutoSize = true;
+            this.lblBroadcastID.Location = new System.Drawing.Point(3, 258);
+            this.lblBroadcastID.Name = "lblBroadcastID";
+            this.lblBroadcastID.Size = new System.Drawing.Size(91, 13);
+            this.lblBroadcastID.TabIndex = 21;
+            this.lblBroadcastID.Text = "Set Broadcast ID:";
+            // 
+            // btnBroadcast
+            // 
+            this.btnBroadcast.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBroadcast.Location = new System.Drawing.Point(6, 313);
+            this.btnBroadcast.Name = "btnBroadcast";
+            this.btnBroadcast.Size = new System.Drawing.Size(262, 33);
+            this.btnBroadcast.TabIndex = 20;
+            this.btnBroadcast.Text = "Set Broadcast ID (B)";
+            this.btnBroadcast.UseVisualStyleBackColor = true;
+            this.btnBroadcast.Click += new System.EventHandler(this.btnBroadcastID_Click);
+            // 
+            // txtBroadcastID
+            // 
+            this.txtBroadcastID.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBroadcastID.Location = new System.Drawing.Point(6, 274);
+            this.txtBroadcastID.Multiline = true;
+            this.txtBroadcastID.Name = "txtBroadcastID";
+            this.txtBroadcastID.Size = new System.Drawing.Size(262, 33);
+            this.txtBroadcastID.TabIndex = 19;
+            this.txtBroadcastID.TextChanged += new System.EventHandler(this.txtBroadcastID_TextChanged);
+            // 
             // lblFilterStatus
             // 
             this.lblFilterStatus.AutoSize = true;
             this.lblFilterStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFilterStatus.Location = new System.Drawing.Point(175, 32);
+            this.lblFilterStatus.Location = new System.Drawing.Point(175, 30);
             this.lblFilterStatus.Name = "lblFilterStatus";
             this.lblFilterStatus.Size = new System.Drawing.Size(0, 17);
             this.lblFilterStatus.TabIndex = 18;
@@ -381,7 +425,7 @@
             // 
             this.lblMaskStatus.AutoSize = true;
             this.lblMaskStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaskStatus.Location = new System.Drawing.Point(175, 182);
+            this.lblMaskStatus.Location = new System.Drawing.Point(175, 143);
             this.lblMaskStatus.Name = "lblMaskStatus";
             this.lblMaskStatus.Size = new System.Drawing.Size(0, 17);
             this.lblMaskStatus.TabIndex = 17;
@@ -390,24 +434,15 @@
             // 
             this.lblIncomingStatus.AutoSize = true;
             this.lblIncomingStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIncomingStatus.Location = new System.Drawing.Point(175, 494);
+            this.lblIncomingStatus.Location = new System.Drawing.Point(175, 510);
             this.lblIncomingStatus.Name = "lblIncomingStatus";
             this.lblIncomingStatus.Size = new System.Drawing.Size(0, 17);
             this.lblIncomingStatus.TabIndex = 16;
             // 
-            // lblBroadCastID
-            // 
-            this.lblBroadCastID.AutoSize = true;
-            this.lblBroadCastID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBroadCastID.Location = new System.Drawing.Point(175, 336);
-            this.lblBroadCastID.Name = "lblBroadCastID";
-            this.lblBroadCastID.Size = new System.Drawing.Size(0, 17);
-            this.lblBroadCastID.TabIndex = 15;
-            // 
             // lblIncomingID
             // 
             this.lblIncomingID.AutoSize = true;
-            this.lblIncomingID.Location = new System.Drawing.Point(3, 493);
+            this.lblIncomingID.Location = new System.Drawing.Point(3, 506);
             this.lblIncomingID.Name = "lblIncomingID";
             this.lblIncomingID.Size = new System.Drawing.Size(86, 13);
             this.lblIncomingID.TabIndex = 14;
@@ -416,18 +451,18 @@
             // btnIncoming
             // 
             this.btnIncoming.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIncoming.Location = new System.Drawing.Point(6, 570);
+            this.btnIncoming.Location = new System.Drawing.Point(6, 561);
             this.btnIncoming.Name = "btnIncoming";
             this.btnIncoming.Size = new System.Drawing.Size(262, 33);
             this.btnIncoming.TabIndex = 13;
-            this.btnIncoming.Text = "Set Incoming ID";
+            this.btnIncoming.Text = "Set Incoming ID (E)";
             this.btnIncoming.UseVisualStyleBackColor = true;
             this.btnIncoming.Click += new System.EventHandler(this.btnIncoming_Click);
             // 
             // txtIncoming
             // 
             this.txtIncoming.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIncoming.Location = new System.Drawing.Point(6, 509);
+            this.txtIncoming.Location = new System.Drawing.Point(6, 523);
             this.txtIncoming.Multiline = true;
             this.txtIncoming.Name = "txtIncoming";
             this.txtIncoming.Size = new System.Drawing.Size(262, 33);
@@ -437,27 +472,27 @@
             // lblOutgoingID
             // 
             this.lblOutgoingID.AutoSize = true;
-            this.lblOutgoingID.Location = new System.Drawing.Point(3, 336);
+            this.lblOutgoingID.Location = new System.Drawing.Point(3, 384);
             this.lblOutgoingID.Name = "lblOutgoingID";
-            this.lblOutgoingID.Size = new System.Drawing.Size(86, 13);
+            this.lblOutgoingID.Size = new System.Drawing.Size(102, 13);
             this.lblOutgoingID.TabIndex = 11;
-            this.lblOutgoingID.Text = "Set Outgoing ID:";
+            this.lblOutgoingID.Text = "Set Outgoing ID (#):";
             // 
             // btnOutgoing
             // 
             this.btnOutgoing.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOutgoing.Location = new System.Drawing.Point(6, 413);
+            this.btnOutgoing.Location = new System.Drawing.Point(6, 440);
             this.btnOutgoing.Name = "btnOutgoing";
             this.btnOutgoing.Size = new System.Drawing.Size(262, 33);
             this.btnOutgoing.TabIndex = 10;
-            this.btnOutgoing.Text = "Set Outgoing ID";
+            this.btnOutgoing.Text = "Set Outgoing ID (#)";
             this.btnOutgoing.UseVisualStyleBackColor = true;
             this.btnOutgoing.Click += new System.EventHandler(this.btnOutgoing_Click);
             // 
             // txtOutgoing
             // 
             this.txtOutgoing.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOutgoing.Location = new System.Drawing.Point(6, 352);
+            this.txtOutgoing.Location = new System.Drawing.Point(6, 401);
             this.txtOutgoing.Multiline = true;
             this.txtOutgoing.Name = "txtOutgoing";
             this.txtOutgoing.Size = new System.Drawing.Size(262, 33);
@@ -467,7 +502,7 @@
             // lblMask
             // 
             this.lblMask.AutoSize = true;
-            this.lblMask.Location = new System.Drawing.Point(3, 181);
+            this.lblMask.Location = new System.Drawing.Point(3, 142);
             this.lblMask.Name = "lblMask";
             this.lblMask.Size = new System.Drawing.Size(102, 13);
             this.lblMask.TabIndex = 8;
@@ -476,18 +511,18 @@
             // btnSetMask
             // 
             this.btnSetMask.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetMask.Location = new System.Drawing.Point(6, 258);
+            this.btnSetMask.Location = new System.Drawing.Point(6, 197);
             this.btnSetMask.Name = "btnSetMask";
             this.btnSetMask.Size = new System.Drawing.Size(262, 33);
             this.btnSetMask.TabIndex = 7;
-            this.btnSetMask.Text = "Set Mask";
+            this.btnSetMask.Text = "Set Mask (M)";
             this.btnSetMask.UseVisualStyleBackColor = true;
             this.btnSetMask.Click += new System.EventHandler(this.btnSetMask_Click);
             // 
             // txtMask
             // 
             this.txtMask.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMask.Location = new System.Drawing.Point(6, 197);
+            this.txtMask.Location = new System.Drawing.Point(6, 158);
             this.txtMask.Multiline = true;
             this.txtMask.Name = "txtMask";
             this.txtMask.Size = new System.Drawing.Size(262, 33);
@@ -497,7 +532,7 @@
             // lblFilter
             // 
             this.lblFilter.AutoSize = true;
-            this.lblFilter.Location = new System.Drawing.Point(3, 31);
+            this.lblFilter.Location = new System.Drawing.Point(3, 24);
             this.lblFilter.Name = "lblFilter";
             this.lblFilter.Size = new System.Drawing.Size(98, 13);
             this.lblFilter.TabIndex = 5;
@@ -506,18 +541,18 @@
             // btnSetFilter
             // 
             this.btnSetFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetFilter.Location = new System.Drawing.Point(6, 108);
+            this.btnSetFilter.Location = new System.Drawing.Point(6, 80);
             this.btnSetFilter.Name = "btnSetFilter";
             this.btnSetFilter.Size = new System.Drawing.Size(262, 33);
             this.btnSetFilter.TabIndex = 4;
-            this.btnSetFilter.Text = "Set Filter";
+            this.btnSetFilter.Text = "Set Filter (A)";
             this.btnSetFilter.UseVisualStyleBackColor = true;
             this.btnSetFilter.Click += new System.EventHandler(this.btnSetFilter_Click);
             // 
             // txtFilter
             // 
             this.txtFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFilter.Location = new System.Drawing.Point(6, 47);
+            this.txtFilter.Location = new System.Drawing.Point(6, 41);
             this.txtFilter.Multiline = true;
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(262, 33);
@@ -530,9 +565,9 @@
             this.gbSMS.Controls.Add(this.lblMobile);
             this.gbSMS.Controls.Add(this.btnSend);
             this.gbSMS.Controls.Add(this.txtSMS);
-            this.gbSMS.Location = new System.Drawing.Point(268, 406);
+            this.gbSMS.Location = new System.Drawing.Point(268, 445);
             this.gbSMS.Name = "gbSMS";
-            this.gbSMS.Size = new System.Drawing.Size(308, 219);
+            this.gbSMS.Size = new System.Drawing.Size(308, 180);
             this.gbSMS.TabIndex = 3;
             this.gbSMS.TabStop = false;
             this.gbSMS.Text = "SMS Controls";
@@ -577,14 +612,13 @@
             // 
             // gbControls
             // 
+            this.gbControls.Controls.Add(this.txtSetTemp);
+            this.gbControls.Controls.Add(this.btnSetTemp);
             this.gbControls.Controls.Add(this.btnLED4OnOff);
+            this.gbControls.Controls.Add(this.btnControlTemp);
             this.gbControls.Controls.Add(this.btnLED3OnOff);
             this.gbControls.Controls.Add(this.btnLED2OnOff);
-            this.gbControls.Controls.Add(this.btnSwitch2OnOff);
             this.gbControls.Controls.Add(this.btnLED1OnOff);
-            this.gbControls.Controls.Add(this.btnSwitch4OnOff);
-            this.gbControls.Controls.Add(this.btnSwitch3OnOff);
-            this.gbControls.Controls.Add(this.btnSwitch1OnOff);
             this.gbControls.Controls.Add(this.btnMotorFwdRev);
             this.gbControls.Controls.Add(this.btnMotorOnOff);
             this.gbControls.Controls.Add(this.btnHeater);
@@ -594,6 +628,25 @@
             this.gbControls.TabIndex = 2;
             this.gbControls.TabStop = false;
             this.gbControls.Text = "Board Controls";
+            // 
+            // txtSetTemp
+            // 
+            this.txtSetTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSetTemp.Location = new System.Drawing.Point(7, 87);
+            this.txtSetTemp.Name = "txtSetTemp";
+            this.txtSetTemp.Size = new System.Drawing.Size(199, 29);
+            this.txtSetTemp.TabIndex = 7;
+            // 
+            // btnSetTemp
+            // 
+            this.btnSetTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetTemp.Location = new System.Drawing.Point(6, 123);
+            this.btnSetTemp.Name = "btnSetTemp";
+            this.btnSetTemp.Size = new System.Drawing.Size(200, 35);
+            this.btnSetTemp.TabIndex = 8;
+            this.btnSetTemp.Text = "Set Temp Threshold";
+            this.btnSetTemp.UseVisualStyleBackColor = true;
+            this.btnSetTemp.Click += new System.EventHandler(this.btnSetTemp_Click);
             // 
             // btnLED4OnOff
             // 
@@ -605,6 +658,17 @@
             this.btnLED4OnOff.Text = "LED4 (On/Off)";
             this.btnLED4OnOff.UseVisualStyleBackColor = true;
             this.btnLED4OnOff.Click += new System.EventHandler(this.btnLED4OnOff_Click);
+            // 
+            // btnControlTemp
+            // 
+            this.btnControlTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnControlTemp.Location = new System.Drawing.Point(6, 45);
+            this.btnControlTemp.Name = "btnControlTemp";
+            this.btnControlTemp.Size = new System.Drawing.Size(200, 35);
+            this.btnControlTemp.TabIndex = 33;
+            this.btnControlTemp.Text = "Start/Stop Temp Control";
+            this.btnControlTemp.UseVisualStyleBackColor = true;
+            this.btnControlTemp.Click += new System.EventHandler(this.btnGetTemp_Click);
             // 
             // btnLED3OnOff
             // 
@@ -628,17 +692,6 @@
             this.btnLED2OnOff.UseVisualStyleBackColor = true;
             this.btnLED2OnOff.Click += new System.EventHandler(this.btnLED2OnOff_Click);
             // 
-            // btnSwitch2OnOff
-            // 
-            this.btnSwitch2OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSwitch2OnOff.Location = new System.Drawing.Point(7, 284);
-            this.btnSwitch2OnOff.Name = "btnSwitch2OnOff";
-            this.btnSwitch2OnOff.Size = new System.Drawing.Size(199, 35);
-            this.btnSwitch2OnOff.TabIndex = 7;
-            this.btnSwitch2OnOff.Text = "Switch 2 (On/Off)";
-            this.btnSwitch2OnOff.UseVisualStyleBackColor = true;
-            this.btnSwitch2OnOff.Click += new System.EventHandler(this.btnSwitch2OnOff_Click);
-            // 
             // btnLED1OnOff
             // 
             this.btnLED1OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -650,43 +703,10 @@
             this.btnLED1OnOff.UseVisualStyleBackColor = true;
             this.btnLED1OnOff.Click += new System.EventHandler(this.btnLED1OnOff_Click);
             // 
-            // btnSwitch4OnOff
-            // 
-            this.btnSwitch4OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSwitch4OnOff.Location = new System.Drawing.Point(6, 372);
-            this.btnSwitch4OnOff.Name = "btnSwitch4OnOff";
-            this.btnSwitch4OnOff.Size = new System.Drawing.Size(199, 35);
-            this.btnSwitch4OnOff.TabIndex = 5;
-            this.btnSwitch4OnOff.Text = "Switch 4 (On/Off)";
-            this.btnSwitch4OnOff.UseVisualStyleBackColor = true;
-            this.btnSwitch4OnOff.Click += new System.EventHandler(this.btnSwitch4OnOff_Click);
-            // 
-            // btnSwitch3OnOff
-            // 
-            this.btnSwitch3OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSwitch3OnOff.Location = new System.Drawing.Point(6, 327);
-            this.btnSwitch3OnOff.Name = "btnSwitch3OnOff";
-            this.btnSwitch3OnOff.Size = new System.Drawing.Size(199, 35);
-            this.btnSwitch3OnOff.TabIndex = 4;
-            this.btnSwitch3OnOff.Text = "Switch 3 (On/Off)";
-            this.btnSwitch3OnOff.UseVisualStyleBackColor = true;
-            this.btnSwitch3OnOff.Click += new System.EventHandler(this.btnSwitch3OnOff_Click);
-            // 
-            // btnSwitch1OnOff
-            // 
-            this.btnSwitch1OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSwitch1OnOff.Location = new System.Drawing.Point(6, 241);
-            this.btnSwitch1OnOff.Name = "btnSwitch1OnOff";
-            this.btnSwitch1OnOff.Size = new System.Drawing.Size(199, 35);
-            this.btnSwitch1OnOff.TabIndex = 3;
-            this.btnSwitch1OnOff.Text = "Switch 1 (On/Off)";
-            this.btnSwitch1OnOff.UseVisualStyleBackColor = true;
-            this.btnSwitch1OnOff.Click += new System.EventHandler(this.btnSwitch1OnOff_Click);
-            // 
             // btnMotorFwdRev
             // 
             this.btnMotorFwdRev.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMotorFwdRev.Location = new System.Drawing.Point(6, 157);
+            this.btnMotorFwdRev.Location = new System.Drawing.Point(6, 351);
             this.btnMotorFwdRev.Name = "btnMotorFwdRev";
             this.btnMotorFwdRev.Size = new System.Drawing.Size(199, 35);
             this.btnMotorFwdRev.TabIndex = 2;
@@ -697,7 +717,7 @@
             // btnMotorOnOff
             // 
             this.btnMotorOnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMotorOnOff.Location = new System.Drawing.Point(6, 116);
+            this.btnMotorOnOff.Location = new System.Drawing.Point(6, 310);
             this.btnMotorOnOff.Name = "btnMotorOnOff";
             this.btnMotorOnOff.Size = new System.Drawing.Size(199, 35);
             this.btnMotorOnOff.TabIndex = 1;
@@ -708,7 +728,7 @@
             // btnHeater
             // 
             this.btnHeater.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHeater.Location = new System.Drawing.Point(7, 35);
+            this.btnHeater.Location = new System.Drawing.Point(7, 217);
             this.btnHeater.Name = "btnHeater";
             this.btnHeater.Size = new System.Drawing.Size(199, 35);
             this.btnHeater.TabIndex = 0;
@@ -718,6 +738,7 @@
             // 
             // gbKeypad
             // 
+            this.gbKeypad.Controls.Add(this.lblKey);
             this.gbKeypad.Controls.Add(this.btn7);
             this.gbKeypad.Controls.Add(this.btn8);
             this.gbKeypad.Controls.Add(this.btnHash);
@@ -732,7 +753,7 @@
             this.gbKeypad.Controls.Add(this.btn1);
             this.gbKeypad.Location = new System.Drawing.Point(267, 84);
             this.gbKeypad.Name = "gbKeypad";
-            this.gbKeypad.Size = new System.Drawing.Size(308, 316);
+            this.gbKeypad.Size = new System.Drawing.Size(308, 355);
             this.gbKeypad.TabIndex = 1;
             this.gbKeypad.TabStop = false;
             this.gbKeypad.Text = "Keypad";
@@ -860,7 +881,6 @@
             // gbStatus
             // 
             this.gbStatus.Controls.Add(this.lblDegrees);
-            this.gbStatus.Controls.Add(this.btnGetTemp);
             this.gbStatus.Controls.Add(this.lblMDirection);
             this.gbStatus.Controls.Add(this.lblDirection);
             this.gbStatus.Controls.Add(this.lblSwitch4OnOff);
@@ -896,21 +916,11 @@
             // 
             this.lblDegrees.AutoSize = true;
             this.lblDegrees.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDegrees.Location = new System.Drawing.Point(158, 37);
+            this.lblDegrees.Location = new System.Drawing.Point(165, 37);
             this.lblDegrees.Name = "lblDegrees";
             this.lblDegrees.Size = new System.Drawing.Size(20, 20);
             this.lblDegrees.TabIndex = 34;
             this.lblDegrees.Text = "C";
-            // 
-            // btnGetTemp
-            // 
-            this.btnGetTemp.Location = new System.Drawing.Point(179, 35);
-            this.btnGetTemp.Name = "btnGetTemp";
-            this.btnGetTemp.Size = new System.Drawing.Size(75, 23);
-            this.btnGetTemp.TabIndex = 33;
-            this.btnGetTemp.Text = "Get TEMP";
-            this.btnGetTemp.UseVisualStyleBackColor = true;
-            this.btnGetTemp.Click += new System.EventHandler(this.btnGetTemp_Click);
             // 
             // lblMDirection
             // 
@@ -936,7 +946,7 @@
             // 
             this.lblSwitch4OnOff.AutoSize = true;
             this.lblSwitch4OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSwitch4OnOff.Location = new System.Drawing.Point(121, 381);
+            this.lblSwitch4OnOff.Location = new System.Drawing.Point(125, 393);
             this.lblSwitch4OnOff.Name = "lblSwitch4OnOff";
             this.lblSwitch4OnOff.Size = new System.Drawing.Size(31, 20);
             this.lblSwitch4OnOff.TabIndex = 30;
@@ -946,7 +956,7 @@
             // 
             this.lblSwitch3OnOff.AutoSize = true;
             this.lblSwitch3OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSwitch3OnOff.Location = new System.Drawing.Point(121, 337);
+            this.lblSwitch3OnOff.Location = new System.Drawing.Point(125, 349);
             this.lblSwitch3OnOff.Name = "lblSwitch3OnOff";
             this.lblSwitch3OnOff.Size = new System.Drawing.Size(31, 20);
             this.lblSwitch3OnOff.TabIndex = 29;
@@ -956,7 +966,7 @@
             // 
             this.lblSwitch2OnOff.AutoSize = true;
             this.lblSwitch2OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSwitch2OnOff.Location = new System.Drawing.Point(123, 294);
+            this.lblSwitch2OnOff.Location = new System.Drawing.Point(125, 306);
             this.lblSwitch2OnOff.Name = "lblSwitch2OnOff";
             this.lblSwitch2OnOff.Size = new System.Drawing.Size(31, 20);
             this.lblSwitch2OnOff.TabIndex = 28;
@@ -966,7 +976,7 @@
             // 
             this.lblSwitch1.AutoSize = true;
             this.lblSwitch1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSwitch1.Location = new System.Drawing.Point(4, 246);
+            this.lblSwitch1.Location = new System.Drawing.Point(4, 258);
             this.lblSwitch1.Name = "lblSwitch1";
             this.lblSwitch1.Size = new System.Drawing.Size(73, 20);
             this.lblSwitch1.TabIndex = 23;
@@ -976,7 +986,7 @@
             // 
             this.lblSwitch1OnOff.AutoSize = true;
             this.lblSwitch1OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSwitch1OnOff.Location = new System.Drawing.Point(123, 246);
+            this.lblSwitch1OnOff.Location = new System.Drawing.Point(125, 258);
             this.lblSwitch1OnOff.Name = "lblSwitch1OnOff";
             this.lblSwitch1OnOff.Size = new System.Drawing.Size(31, 20);
             this.lblSwitch1OnOff.TabIndex = 27;
@@ -986,7 +996,7 @@
             // 
             this.lblSwitch2.AutoSize = true;
             this.lblSwitch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSwitch2.Location = new System.Drawing.Point(4, 294);
+            this.lblSwitch2.Location = new System.Drawing.Point(4, 306);
             this.lblSwitch2.Name = "lblSwitch2";
             this.lblSwitch2.Size = new System.Drawing.Size(73, 20);
             this.lblSwitch2.TabIndex = 24;
@@ -996,7 +1006,7 @@
             // 
             this.lblSwitch4.AutoSize = true;
             this.lblSwitch4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSwitch4.Location = new System.Drawing.Point(4, 381);
+            this.lblSwitch4.Location = new System.Drawing.Point(4, 393);
             this.lblSwitch4.Name = "lblSwitch4";
             this.lblSwitch4.Size = new System.Drawing.Size(73, 20);
             this.lblSwitch4.TabIndex = 26;
@@ -1006,7 +1016,7 @@
             // 
             this.lblSwitch3.AutoSize = true;
             this.lblSwitch3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSwitch3.Location = new System.Drawing.Point(4, 337);
+            this.lblSwitch3.Location = new System.Drawing.Point(4, 349);
             this.lblSwitch3.Name = "lblSwitch3";
             this.lblSwitch3.Size = new System.Drawing.Size(73, 20);
             this.lblSwitch3.TabIndex = 25;
@@ -1016,7 +1026,7 @@
             // 
             this.lblLED4OnOff.AutoSize = true;
             this.lblLED4OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLED4OnOff.Location = new System.Drawing.Point(123, 593);
+            this.lblLED4OnOff.Location = new System.Drawing.Point(125, 593);
             this.lblLED4OnOff.Name = "lblLED4OnOff";
             this.lblLED4OnOff.Size = new System.Drawing.Size(31, 20);
             this.lblLED4OnOff.TabIndex = 13;
@@ -1026,7 +1036,7 @@
             // 
             this.lblLED3OnOff.AutoSize = true;
             this.lblLED3OnOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLED3OnOff.Location = new System.Drawing.Point(123, 549);
+            this.lblLED3OnOff.Location = new System.Drawing.Point(125, 549);
             this.lblLED3OnOff.Name = "lblLED3OnOff";
             this.lblLED3OnOff.Size = new System.Drawing.Size(31, 20);
             this.lblLED3OnOff.TabIndex = 12;
@@ -1136,7 +1146,7 @@
             // 
             this.lblTemp.AutoSize = true;
             this.lblTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTemp.Location = new System.Drawing.Point(123, 37);
+            this.lblTemp.Location = new System.Drawing.Point(125, 37);
             this.lblTemp.Name = "lblTemp";
             this.lblTemp.Size = new System.Drawing.Size(18, 20);
             this.lblTemp.TabIndex = 1;
@@ -1157,15 +1167,14 @@
             this.formTimer.Interval = 2000;
             this.formTimer.Tick += new System.EventHandler(this.formTimer_Tick);
             // 
-            // btnSetTemp
+            // lblKey
             // 
-            this.btnSetTemp.Location = new System.Drawing.Point(449, 8);
-            this.btnSetTemp.Name = "btnSetTemp";
-            this.btnSetTemp.Size = new System.Drawing.Size(75, 23);
-            this.btnSetTemp.TabIndex = 8;
-            this.btnSetTemp.Text = "button1";
-            this.btnSetTemp.UseVisualStyleBackColor = true;
-            this.btnSetTemp.Click += new System.EventHandler(this.btnSetTemp_Click);
+            this.lblKey.AutoSize = true;
+            this.lblKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKey.Location = new System.Drawing.Point(21, 320);
+            this.lblKey.Name = "lblKey";
+            this.lblKey.Size = new System.Drawing.Size(0, 20);
+            this.lblKey.TabIndex = 4;
             // 
             // CTEC3426
             // 
@@ -1177,7 +1186,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(660, 39);
             this.Name = "CTEC3426";
-            this.Text = "CANBUS";
+            this.Text = "CANBUS Control";
             this.Load += new System.EventHandler(this.CTEC3426_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -1190,7 +1199,9 @@
             this.gbSMS.ResumeLayout(false);
             this.gbSMS.PerformLayout();
             this.gbControls.ResumeLayout(false);
+            this.gbControls.PerformLayout();
             this.gbKeypad.ResumeLayout(false);
+            this.gbKeypad.PerformLayout();
             this.gbStatus.ResumeLayout(false);
             this.gbStatus.PerformLayout();
             this.ResumeLayout(false);
@@ -1251,14 +1262,10 @@
         private System.Windows.Forms.Button btnHeater;
         private System.Windows.Forms.Button btnMotorOnOff;
         private System.Windows.Forms.Button btnMotorFwdRev;
-        private System.Windows.Forms.Button btnSwitch1OnOff;
         private System.Windows.Forms.Button btnLED4OnOff;
         private System.Windows.Forms.Button btnLED3OnOff;
         private System.Windows.Forms.Button btnLED2OnOff;
-        private System.Windows.Forms.Button btnSwitch2OnOff;
         private System.Windows.Forms.Button btnLED1OnOff;
-        private System.Windows.Forms.Button btnSwitch4OnOff;
-        private System.Windows.Forms.Button btnSwitch3OnOff;
         private System.Windows.Forms.GroupBox gbSMS;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.TextBox txtSMS;
@@ -1288,16 +1295,21 @@
         private System.Windows.Forms.Label lblDirection;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Button btnGetTemp;
+        private System.Windows.Forms.Button btnControlTemp;
         private System.Windows.Forms.Label lblSMSMessage;
         private System.Windows.Forms.Timer formTimer;
         private System.Windows.Forms.Label lblDegrees;
-        private System.Windows.Forms.Label lblBroadCastID;
         private System.Windows.Forms.Label lblFilterStatus;
         private System.Windows.Forms.Label lblMaskStatus;
         private System.Windows.Forms.Label lblIncomingStatus;
         private System.Windows.Forms.TextBox txtSetTemp;
         private System.Windows.Forms.Button btnSetTemp;
+        private System.Windows.Forms.Label lblBroadcastID;
+        private System.Windows.Forms.Button btnBroadcast;
+        private System.Windows.Forms.TextBox txtBroadcastID;
+        private System.Windows.Forms.Label lblBroadcastStatus;
+        private System.Windows.Forms.Label lblOutgoingStatus;
+        private System.Windows.Forms.Label lblKey;
     }
 }
 

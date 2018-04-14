@@ -61,7 +61,7 @@ namespace CTEC3426_2015
             string hex = cal.ToString("x2");
 
 
-            sendCommand(serialPort, "#" + lblBroadCastID.Text + hex + bytes);
+            sendCommand(serialPort, "#" + lblOutgoingStatus.Text + hex + bytes);
 
         }
 
@@ -73,6 +73,7 @@ namespace CTEC3426_2015
             btnIncoming.Enabled = false;
             btnSetFilter.Enabled = false;
             btnSetMask.Enabled = false;
+            btnBroadcast.Enabled = false;
         }
 
         /* Initialise the toolbar menu */
@@ -222,7 +223,7 @@ namespace CTEC3426_2015
         {
             try
             {
-                if(lblBroadCastID.Text == "")
+                if(lblOutgoingStatus.Text == "")
                 {
                     if (lblHStatus.Text == "Off")
                     {
@@ -323,95 +324,7 @@ namespace CTEC3426_2015
 
                 /*kepyad*/
                 int Key_Press = Convert.ToInt32(data[1]);
-
-                switch (Key_Press)
-                {
-
-                    case 30:
-
-                        txtFilter.Text = "0";
-                        ChangeColor(Color.DarkRed);
-
-
-                        break;
-
-                    //case 31:
-
-                    //    key_pressed_status.Text = "1";
-
-                    //    break;
-
-                    //case 32:
-
-                    //    key_pressed_status.Text = "2";
-
-                    //    break;
-
-                    //case 33:
-
-                    //    key_pressed_status.Text = "3";
-
-                    //    break;
-
-                    //case 34:
-
-                    //    key_pressed_status.Text = "4";
-
-                    //    break;
-
-                    //case 35:
-
-                    //    key_pressed_status.Text = "5";
-
-                    //    break;
-
-                    //case 36:
-
-                    //    key_pressed_status.Text = "6";
-
-                    //    break;
-
-                    //case 37:
-
-                    //    key_pressed_status.Text = "7";
-
-                    //    break;
-
-                    //case 38:
-
-                    //    key_pressed_status.Text = "8";
-
-                    //    break;
-
-
-                    //case 39:
-
-                    //    key_pressed_status.Text = "9";
-
-                    //    break;
-
-
-                    //case 53:
-
-                    //    key_pressed_status.Text = "*";
-
-                    //    break;
-
-
-                    //case 48:
-
-                    //    key_pressed_status.Text = "#";
-
-
-                    //    break;
-
-                    default:
-
-                        lblSMSMessage.Text = "No key is being pressed";
-
-                        break;
-
-                }
+                Keypad(Key_Press);
 
                 /*swicthes*/
                 for (int i = 0; i < data.Length; i++)
@@ -529,6 +442,96 @@ namespace CTEC3426_2015
             }
         }
 
+        void Keypad(int Key_Press)
+        {
+            switch (Key_Press)
+            {
+
+                case 30:
+
+                    lblKey.Text = "0";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+                case 31:
+
+                    lblKey.Text = "1";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+                case 32:
+
+                    lblKey.Text = "2";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+                case 33:
+
+                    lblKey.Text = "3";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+                case 34:
+
+                    lblKey.Text = "4";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+                case 35:
+
+                    lblKey.Text = "5";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+                case 36:
+
+                    lblKey.Text = "6";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+                case 37:
+
+                    lblKey.Text = "7";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+                case 38:
+
+                    lblKey.Text = "8";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+
+                case 39:
+
+                    lblKey.Text = "9";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+
+                case 53:
+
+                    lblKey.Text = "*";
+                    ChangeColor(Color.DarkRed);
+                    break;
+
+
+                case 48:
+
+                    lblKey.Text = "#";
+                    ChangeColor(Color.DarkRed);
+
+                    break;
+
+                default:
+
+                    lblKey.Text = "No key pressed";
+
+                    break;
+
+            }
+        }
+
         private async void ChangeColor(Color new_color)
         {
             var original_color = btn0.BackColor;
@@ -548,7 +551,7 @@ namespace CTEC3426_2015
             {
                 if (lblMStatus.Text == "Off")
                 {
-                    if(lblBroadCastID.Text == "")
+                    if(lblOutgoingStatus.Text == "")
                     {
                         sendCommand(serialPort, "F");
                     }
@@ -566,7 +569,7 @@ namespace CTEC3426_2015
                 }
                 else
                 {
-                    if (lblBroadCastID.Text == "")
+                    if (lblOutgoingStatus.Text == "")
                     {
                         sendCommand(serialPort, "S");
                     }
@@ -592,7 +595,7 @@ namespace CTEC3426_2015
         {        
             try
             {
-                if (lblBroadCastID.Text == "")
+                if (lblOutgoingStatus.Text == "")
                 {
                     if (lblLED1OnOff.Text == "Off")
                     {
@@ -635,7 +638,7 @@ namespace CTEC3426_2015
         {
             try
             {
-                if (lblBroadCastID.Text == "")
+                if (lblOutgoingStatus.Text == "")
                 {
                     if (lblLED2OnOff.Text == "Off")
                     {
@@ -654,7 +657,7 @@ namespace CTEC3426_2015
                     {
                         array[1] = 0x20;
                         Remote_func();
-                       // sendCommand(serialPort, hash + lblBroadCastID.Text + "2000000000000000");
+                        // sendCommand(serialPort, hash + lblBroadCastID.Text + "2000000000000000");
                         lblLED2OnOff.Text = "On";
                     }
                     else
@@ -677,7 +680,7 @@ namespace CTEC3426_2015
         {
             try
             {
-                if (lblBroadCastID.Text == "")
+                if (lblOutgoingStatus.Text == "")
                 {
                     if (lblLED3OnOff.Text == "Off")
                     {
@@ -720,7 +723,7 @@ namespace CTEC3426_2015
         {
             try
             {
-                if (lblBroadCastID.Text == "")
+                if (lblOutgoingStatus.Text == "")
                 {
                     if (lblLED4OnOff.Text == "Off")
                     {
@@ -766,13 +769,13 @@ namespace CTEC3426_2015
                 ClearFields();
                 ClearLabels();
                 ClearStatuses();
-                if (lblBroadCastID.Text == "")
+                if (lblOutgoingStatus.Text == "")
                 {
                     sendCommand(serialPort, "@");
                 }
                 else
                 {
-                    sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
+                    sendCommand(serialPort, hash + lblOutgoingStatus.Text + "0000000000000000");
                 }
             }
             catch (Exception ex)
@@ -785,8 +788,9 @@ namespace CTEC3426_2015
         {
             lblMaskStatus.Text = "";
             lblFilterStatus.Text = "";
-            lblBroadCastID.Text = "";
+            lblOutgoingStatus.Text = "";
             lblIncomingStatus.Text = "";
+            lblBroadcastStatus.Text = "";
         }
 
         void ClearFields()
@@ -802,6 +806,7 @@ namespace CTEC3426_2015
             btnIncoming.Enabled = false;
             btnSetFilter.Enabled = false;
             btnSetMask.Enabled = false;
+            btnBroadcast.Enabled = false;
         }
 
         void ClearLabels()
@@ -893,6 +898,7 @@ namespace CTEC3426_2015
             }         
             catch (Exception ex)
             {
+                lblSMSMessage.ForeColor = Color.Black;
                 lblSMSMessage.Text = "Please connect to the serial port";
             }
         }
@@ -1144,7 +1150,8 @@ namespace CTEC3426_2015
             try
             {
                 outgoingID = txtOutgoing.Text;
-                lblBroadCastID.Text = txtOutgoing.Text.ToUpper();
+                lblOutgoingStatus.Text = txtOutgoing.Text.ToUpper();
+                //lblIncomingStatus.Text = txtIncoming.Text.ToUpper();
                 btnOutgoing.Enabled = false;
                 txtOutgoing.Text = "";
                 ClearLabels();
@@ -1214,5 +1221,30 @@ namespace CTEC3426_2015
 
             }
         }
+
+        private void btnBroadcastID_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string broadcastID = txtBroadcastID.Text;
+                sendCommand(serialPort, "B" + broadcastID);
+                lblBroadcastStatus.Text = txtBroadcastID.Text.ToUpper();
+                btnBroadcast.Enabled = false;
+                txtBroadcastID.Text = "";
+                ClearLabels();
+            }
+
+            catch (Exception ex)
+            {
+                lblSMSMessage.Text = "Please connect to the serial port";
+            }
+        }
+
+        private void txtBroadcastID_TextChanged(object sender, EventArgs e)
+        {
+            btnBroadcast.Enabled = true;
+        }
+
+     
     }
 }
