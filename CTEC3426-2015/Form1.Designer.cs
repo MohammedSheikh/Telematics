@@ -77,6 +77,7 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.txtSMS = new System.Windows.Forms.TextBox();
             this.gbControls = new System.Windows.Forms.GroupBox();
+            this.lblThreshold = new System.Windows.Forms.Label();
             this.txtSetTemp = new System.Windows.Forms.TextBox();
             this.btnSetTemp = new System.Windows.Forms.Button();
             this.btnLED4OnOff = new System.Windows.Forms.Button();
@@ -88,6 +89,7 @@
             this.btnMotorOnOff = new System.Windows.Forms.Button();
             this.btnHeater = new System.Windows.Forms.Button();
             this.gbKeypad = new System.Windows.Forms.GroupBox();
+            this.lblKey = new System.Windows.Forms.Label();
             this.btn7 = new System.Windows.Forms.Button();
             this.btn8 = new System.Windows.Forms.Button();
             this.btnHash = new System.Windows.Forms.Button();
@@ -127,7 +129,6 @@
             this.lblTemp = new System.Windows.Forms.Label();
             this.lblTemperature = new System.Windows.Forms.Label();
             this.formTimer = new System.Windows.Forms.Timer(this.components);
-            this.lblKey = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.terminalTab.SuspendLayout();
@@ -400,7 +401,7 @@
             this.btnBroadcast.TabIndex = 20;
             this.btnBroadcast.Text = "Set Broadcast ID (B)";
             this.btnBroadcast.UseVisualStyleBackColor = true;
-            this.btnBroadcast.Click += new System.EventHandler(this.btnBroadcastID_Click);
+            this.btnBroadcast.Click += new System.EventHandler(this.btnBroadcast_Click);
             // 
             // txtBroadcastID
             // 
@@ -612,6 +613,7 @@
             // 
             // gbControls
             // 
+            this.gbControls.Controls.Add(this.lblThreshold);
             this.gbControls.Controls.Add(this.txtSetTemp);
             this.gbControls.Controls.Add(this.btnSetTemp);
             this.gbControls.Controls.Add(this.btnLED4OnOff);
@@ -629,6 +631,14 @@
             this.gbControls.TabStop = false;
             this.gbControls.Text = "Board Controls";
             // 
+            // lblThreshold
+            // 
+            this.lblThreshold.AutoSize = true;
+            this.lblThreshold.Location = new System.Drawing.Point(6, 28);
+            this.lblThreshold.Name = "lblThreshold";
+            this.lblThreshold.Size = new System.Drawing.Size(0, 13);
+            this.lblThreshold.TabIndex = 4;
+            // 
             // txtSetTemp
             // 
             this.txtSetTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -636,6 +646,7 @@
             this.txtSetTemp.Name = "txtSetTemp";
             this.txtSetTemp.Size = new System.Drawing.Size(199, 29);
             this.txtSetTemp.TabIndex = 7;
+            this.txtSetTemp.TextChanged += new System.EventHandler(this.txtSetTemp_TextChanged);
             // 
             // btnSetTemp
             // 
@@ -668,7 +679,7 @@
             this.btnControlTemp.TabIndex = 33;
             this.btnControlTemp.Text = "Start/Stop Temp Control";
             this.btnControlTemp.UseVisualStyleBackColor = true;
-            this.btnControlTemp.Click += new System.EventHandler(this.btnGetTemp_Click);
+            this.btnControlTemp.Click += new System.EventHandler(this.btnControlTemp_Click);
             // 
             // btnLED3OnOff
             // 
@@ -757,6 +768,15 @@
             this.gbKeypad.TabIndex = 1;
             this.gbKeypad.TabStop = false;
             this.gbKeypad.Text = "Keypad";
+            // 
+            // lblKey
+            // 
+            this.lblKey.AutoSize = true;
+            this.lblKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKey.Location = new System.Drawing.Point(21, 320);
+            this.lblKey.Name = "lblKey";
+            this.lblKey.Size = new System.Drawing.Size(0, 20);
+            this.lblKey.TabIndex = 4;
             // 
             // btn7
             // 
@@ -1167,15 +1187,6 @@
             this.formTimer.Interval = 2000;
             this.formTimer.Tick += new System.EventHandler(this.formTimer_Tick);
             // 
-            // lblKey
-            // 
-            this.lblKey.AutoSize = true;
-            this.lblKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblKey.Location = new System.Drawing.Point(21, 320);
-            this.lblKey.Name = "lblKey";
-            this.lblKey.Size = new System.Drawing.Size(0, 20);
-            this.lblKey.TabIndex = 4;
-            // 
             // CTEC3426
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1310,6 +1321,7 @@
         private System.Windows.Forms.Label lblBroadcastStatus;
         private System.Windows.Forms.Label lblOutgoingStatus;
         private System.Windows.Forms.Label lblKey;
+        private System.Windows.Forms.Label lblThreshold;
     }
 }
 
