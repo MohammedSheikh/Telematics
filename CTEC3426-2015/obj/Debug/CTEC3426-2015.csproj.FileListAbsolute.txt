@@ -25,3 +25,6 @@ H:\Documents\4. Year Four\CTEC3426- Telematics\Assignment\CTEC3426-2017\CTEC3426
 H:\Documents\4. Year Four\CTEC3426- Telematics\Assignment\CTEC3426-2017\CTEC3426-2015\obj\Debug\CTEC3426_2015.Properties.Resources.resources
 H:\Documents\4. Year Four\CTEC3426- Telematics\Assignment\CTEC3426-2017\CTEC3426-2015\obj\Debug\CTEC3426-2015.csproj.GenerateResource.Cache
 H:\Documents\4. Year Four\CTEC3426- Telematics\Assignment\CTEC3426-2017\CTEC3426-2015\obj\Debug\CTEC3426-2015.csprojResolveAssemblyReference.cache
+C:\Users\MTSheikh\Desktop\Telematics\Software\Telematics\CTEC3426-2015\bin\Debug\CTEC3426-2015.exe.config
+C:\Users\MTSheikh\Desktop\Telematics\Software\Telematics\CTEC3426-2015\obj\Debug\CTEC3426-2015.exe
+C:\Users\MTSheikh\Desktop\Telematics\Software\Telematics\CTEC3426-2015\obj\Debug\CTEC3426-2015.pdb

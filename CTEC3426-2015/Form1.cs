@@ -783,6 +783,7 @@ namespace CTEC3426_2015
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            //try
             try
             {
                 ClearFields();
