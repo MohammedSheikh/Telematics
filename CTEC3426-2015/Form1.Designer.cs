@@ -49,7 +49,6 @@
             this.terminal = new System.Windows.Forms.RichTextBox();
             this.canvas = new System.Windows.Forms.TabPage();
             this.btnReset = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.gbCAN = new System.Windows.Forms.GroupBox();
             this.lblOutgoingStatus = new System.Windows.Forms.Label();
             this.lblBroadcastStatus = new System.Windows.Forms.Label();
@@ -299,8 +298,8 @@
             // 
             // canvas
             // 
+            this.canvas.Controls.Add(this.lblSMSMessage);
             this.canvas.Controls.Add(this.btnReset);
-            this.canvas.Controls.Add(this.label2);
             this.canvas.Controls.Add(this.gbCAN);
             this.canvas.Controls.Add(this.gbSMS);
             this.canvas.Controls.Add(this.gbControls);
@@ -319,22 +318,13 @@
             this.btnReset.BackColor = System.Drawing.Color.Red;
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReset.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnReset.Location = new System.Drawing.Point(270, 36);
+            this.btnReset.Location = new System.Drawing.Point(267, 69);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(173, 42);
+            this.btnReset.Size = new System.Drawing.Size(308, 47);
             this.btnReset.TabIndex = 6;
             this.btnReset.Text = "RESET";
             this.btnReset.UseVisualStyleBackColor = false;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(267, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "RESET CAN Board:";
             // 
             // gbCAN
             // 
@@ -562,13 +552,12 @@
             // 
             // gbSMS
             // 
-            this.gbSMS.Controls.Add(this.lblSMSMessage);
             this.gbSMS.Controls.Add(this.lblMobile);
             this.gbSMS.Controls.Add(this.btnSend);
             this.gbSMS.Controls.Add(this.txtSMS);
-            this.gbSMS.Location = new System.Drawing.Point(268, 445);
+            this.gbSMS.Location = new System.Drawing.Point(268, 481);
             this.gbSMS.Name = "gbSMS";
-            this.gbSMS.Size = new System.Drawing.Size(308, 180);
+            this.gbSMS.Size = new System.Drawing.Size(308, 144);
             this.gbSMS.TabIndex = 3;
             this.gbSMS.TabStop = false;
             this.gbSMS.Text = "SMS Controls";
@@ -577,7 +566,7 @@
             // 
             this.lblSMSMessage.AutoSize = true;
             this.lblSMSMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSMSMessage.Location = new System.Drawing.Point(16, 106);
+            this.lblSMSMessage.Location = new System.Drawing.Point(267, 16);
             this.lblSMSMessage.Name = "lblSMSMessage";
             this.lblSMSMessage.Size = new System.Drawing.Size(0, 20);
             this.lblSMSMessage.TabIndex = 3;
@@ -594,7 +583,7 @@
             // btnSend
             // 
             this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSend.Location = new System.Drawing.Point(16, 136);
+            this.btnSend.Location = new System.Drawing.Point(15, 103);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(262, 33);
             this.btnSend.TabIndex = 1;
@@ -762,7 +751,7 @@
             this.gbKeypad.Controls.Add(this.btn3);
             this.gbKeypad.Controls.Add(this.btn2);
             this.gbKeypad.Controls.Add(this.btn1);
-            this.gbKeypad.Location = new System.Drawing.Point(267, 84);
+            this.gbKeypad.Location = new System.Drawing.Point(267, 121);
             this.gbKeypad.Name = "gbKeypad";
             this.gbKeypad.Size = new System.Drawing.Size(308, 355);
             this.gbKeypad.TabIndex = 1;
@@ -1299,7 +1288,6 @@
         private System.Windows.Forms.Label lblSwitch3;
         private System.Windows.Forms.Label lblMDirection;
         private System.Windows.Forms.Label lblDirection;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnControlTemp;
         private System.Windows.Forms.Label lblSMSMessage;

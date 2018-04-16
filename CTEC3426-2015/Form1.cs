@@ -224,21 +224,6 @@ namespace CTEC3426_2015
         {
             try
             {
-                if (lblOutgoingStatus.Text == "")
-                {
-                    if (lblHStatus.Text == "Off")
-                    {
-                        sendCommand(serialPort, "H");
-                        lblHStatus.Text = "On";
-                    }
-                    else
-                    {
-                        sendCommand(serialPort, "C");
-                        lblHStatus.Text = "Off";
-                    }
-                }
-                else
-                {
                     if (lblHStatus.Text == "Off")
                     {
                         array[6] = 0x01;
@@ -251,8 +236,6 @@ namespace CTEC3426_2015
                         RemoteCommand();
                         lblHStatus.Text = "Off";
                     }
-                }
-
             }
             catch (Exception ex)
             {
@@ -476,63 +459,63 @@ namespace CTEC3426_2015
                 //keypad 0
                 case 30:
                     lblKey.Text = "0";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 1
                 case 31:
                     lblKey.Text = "1";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 2
                 case 32:
                     lblKey.Text = "2";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 3
                 case 33:
                     lblKey.Text = "3";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 4
                 case 34:
                     lblKey.Text = "4";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 5
                 case 35:
                     lblKey.Text = "5";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 6
                 case 36:
                     lblKey.Text = "6";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 7
                 case 37:
                     lblKey.Text = "7";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 8
                 case 38:
 
                     lblKey.Text = "8";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad 9
                 case 39:
                     lblKey.Text = "9";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad *
                 case 53:
                     lblKey.Text = "*";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //keypad #
                 case 48:
                     lblKey.Text = "#";
-                    ChangeColor(Color.DarkRed);
+                    
                     break;
                 //default case
                 default:
@@ -540,15 +523,6 @@ namespace CTEC3426_2015
                     break;
             }
         }
-
-        private async void ChangeColor(Color new_color)
-        {
-            var original_color = btn0.BackColor;
-            btn0.BackColor = new_color;
-            await Task.Delay(TimeSpan.FromSeconds(1));
-            btn0.BackColor = original_color;
-        }
-
         
         private void btnMotorOnOff_Click(object sender, EventArgs e)
         {
@@ -562,15 +536,8 @@ namespace CTEC3426_2015
             {
                 if (lblMStatus.Text == "Off")
                 {
-                    if (lblOutgoingStatus.Text == "")
-                    {
-                        sendCommand(serialPort, "F");
-                    }
-                    else
-                    {
-                        array[5] = 0x02;
-                    }
-
+                    array[5] = 0x02;
+                    RemoteCommand();
                     lblMStatus.Text = "On";
                     btnMotorFwdRev.Enabled = true;
                     btnMotorFwdRev.Text = "Motor Reverse";
@@ -578,15 +545,8 @@ namespace CTEC3426_2015
                 }
                 else
                 {
-                    if (lblOutgoingStatus.Text == "")
-                    {
-                        sendCommand(serialPort, "S");
-                    }
-                    else
-                    {
-                        array[5] = 0x00;
-                        RemoteCommand();
-                    }
+                    array[5] = 0x00;
+                    RemoteCommand();
                     lblMStatus.Text = "Off";
                     btnMotorFwdRev.Enabled = false;
                     btnMotorFwdRev.Text = "Motor (Fwd/Rev)";
@@ -623,35 +583,20 @@ namespace CTEC3426_2015
         {
             try
             {
-                if (lblOutgoingStatus.Text == "")
+
+                if (lblLED1OnOff.Text == "Off")
                 {
-                    if (lblLED1OnOff.Text == "Off")
-                    {
-                        sendCommand(serialPort, "0");
-                        lblLED1OnOff.Text = "On";
-                    }
-                    else
-                    {
-                        sendCommand(serialPort, "0");
-                        lblLED1OnOff.Text = "Off";
-                    }
+                    array[0] = 0x10;
+                    RemoteCommand();
+                    lblLED1OnOff.Text = "On";
                 }
                 else
                 {
-                    if (lblLED1OnOff.Text == "Off")
-                    {
-                        array[0] = 0x10;
-                        RemoteCommand();
-                        lblLED1OnOff.Text = "On";
-                    }
-                    else
-                    {
-                        array[0] = 0x00;
-                        RemoteCommand();
-                        lblLED1OnOff.Text = "Off";
-                    }
-
+                    array[0] = 0x00;
+                    RemoteCommand();
+                    lblLED1OnOff.Text = "Off";
                 }
+
             }
 
             catch (Exception ex)
@@ -663,22 +608,7 @@ namespace CTEC3426_2015
         void ToggleLED2()
         {
             try
-            {
-                if (lblOutgoingStatus.Text == "")
-                {
-                    if (lblLED2OnOff.Text == "Off")
-                    {
-                        sendCommand(serialPort, "1");
-                        lblLED2OnOff.Text = "On";
-                    }
-                    else
-                    {
-                        sendCommand(serialPort, "1");
-                        lblLED2OnOff.Text = "Off";
-                    }
-                }
-                else
-                {
+            {            
                     if (lblLED2OnOff.Text == "Off")
                     {
                         array[1] = 0x20;
@@ -693,8 +623,6 @@ namespace CTEC3426_2015
                         //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
                         lblLED2OnOff.Text = "Off";
                     }
-
-                }
             }
             catch (Exception ex)
             {
@@ -706,21 +634,7 @@ namespace CTEC3426_2015
         {
             try
             {
-                if (lblOutgoingStatus.Text == "")
-                {
-                    if (lblLED3OnOff.Text == "Off")
-                    {
-                        sendCommand(serialPort, "2");
-                        lblLED3OnOff.Text = "On";
-                    }
-                    else
-                    {
-                        sendCommand(serialPort, "2");
-                        lblLED3OnOff.Text = "Off";
-                    }
-                }
-                else
-                {
+              
                     if (lblLED3OnOff.Text == "Off")
                     {
                         array[2] = 0x40;
@@ -733,7 +647,6 @@ namespace CTEC3426_2015
                         RemoteCommand();
                         lblLED3OnOff.Text = "Off";
                     }
-                }
             }
             catch (Exception ex)
             {
@@ -745,21 +658,6 @@ namespace CTEC3426_2015
         {
             try
             {
-                if (lblOutgoingStatus.Text == "")
-                {
-                    if (lblLED4OnOff.Text == "Off")
-                    {
-                        sendCommand(serialPort, "3");
-                        lblLED4OnOff.Text = "On";
-                    }
-                    else
-                    {
-                        sendCommand(serialPort, "3");
-                        lblLED4OnOff.Text = "Off";
-                    }
-                }
-                else
-                {
                     if (lblLED4OnOff.Text == "Off")
                     {
                         array[3] = 0x80;
@@ -774,8 +672,6 @@ namespace CTEC3426_2015
                         //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
                         lblLED4OnOff.Text = "Off";
                     }
-
-                }
             }
             catch (Exception ex)
             {
@@ -865,7 +761,6 @@ namespace CTEC3426_2015
                 {
                     array[5] = 0x02;
                     RemoteCommand();
-                    //sendCommand(serialPort, "F");
                     btnMotorFwdRev.Text = "Motor Reverse";
                     lblMDirection.Text = "Forward";
                 }
@@ -873,7 +768,6 @@ namespace CTEC3426_2015
                 {
                     array[5] = 0x06;
                     RemoteCommand();
-                    //sendCommand(serialPort, "R");
                     btnMotorFwdRev.Text = "Motor Forward";
                     lblMDirection.Text = "Reverse";
                 }
