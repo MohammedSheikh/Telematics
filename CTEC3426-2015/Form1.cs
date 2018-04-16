@@ -986,12 +986,19 @@ namespace CTEC3426_2015
         {
             try
             {
-                string canFilter = txtFilter.Text;
-                sendCommand(serialPort, "A" + canFilter);
-                lblFilterStatus.Text = txtFilter.Text.ToUpper();
-                btnSetFilter.Enabled = false;
-                txtFilter.Text = "";
-                ClearLabels();
+                if (txtFilter.Text.Length == 8)
+                {
+                    string canFilter = txtFilter.Text;
+                    sendCommand(serialPort, "A" + canFilter);
+                    lblFilterStatus.Text = txtFilter.Text.ToUpper();
+                    btnSetFilter.Enabled = false;
+                    txtFilter.Text = "";
+                    ClearLabels();
+                }
+                else
+                {
+                    lblSMSMessage.Text = "Filter must be 8 chars";
+                }
             }
             catch (Exception ex)
             {
@@ -1003,12 +1010,20 @@ namespace CTEC3426_2015
         {
             try
             {
-                string canMask = txtMask.Text;
-                sendCommand(serialPort, "M" + canMask);
-                lblMaskStatus.Text = txtMask.Text.ToUpper();
-                btnSetMask.Enabled = false;
-                txtMask.Text = "";
-                ClearLabels();
+                if(txtMask.Text.Length == 8)
+                {
+                    string canMask = txtMask.Text;
+                    sendCommand(serialPort, "M" + canMask);
+                    lblMaskStatus.Text = txtMask.Text.ToUpper();
+                    btnSetMask.Enabled = false;
+                    txtMask.Text = "";
+                    ClearLabels();
+                }
+                else
+                {
+                    lblSMSMessage.Text = "Mask must be 8 chars";
+                }
+                
             }
             catch (Exception ex)
             {
@@ -1020,12 +1035,20 @@ namespace CTEC3426_2015
         {
             try
             {
-                string broadcastID = txtBroadcastID.Text;
-                sendCommand(serialPort, "B" + broadcastID);
-                lblBroadcastStatus.Text = txtBroadcastID.Text.ToUpper();
-                btnBroadcast.Enabled = false;
-                txtBroadcastID.Text = "";
-                ClearLabels();
+                if(txtBroadcastID.Text.Length == 8)
+                {
+                    string broadcastID = txtBroadcastID.Text;
+                    sendCommand(serialPort, "B" + broadcastID);
+                    lblBroadcastStatus.Text = txtBroadcastID.Text.ToUpper();
+                    btnBroadcast.Enabled = false;
+                    txtBroadcastID.Text = "";
+                    ClearLabels();
+                }
+                else
+                {
+                    lblSMSMessage.Text = "Broadcast ID must be 8 chars";
+                }
+                
             }
 
             catch (Exception ex)
@@ -1038,12 +1061,18 @@ namespace CTEC3426_2015
         {
             try
             {
-
-                lblOutgoingStatus.Text = txtOutgoing.Text.ToUpper();
-                outgoingID = lblOutgoingStatus.Text;
-                btnOutgoing.Enabled = false;
-                txtOutgoing.Text = "";
-                ClearLabels();
+                if (txtOutgoing.Text.Length == 8)
+                {
+                    lblOutgoingStatus.Text = txtOutgoing.Text.ToUpper();
+                    outgoingID = lblOutgoingStatus.Text;
+                    btnOutgoing.Enabled = false;
+                    txtOutgoing.Text = "";
+                    ClearLabels();
+                }
+                else
+                {
+                    lblSMSMessage.Text = "Outgoing ID must be 8 chars";
+                }
             }
             catch (Exception ex)
             {
@@ -1055,12 +1084,19 @@ namespace CTEC3426_2015
         {
             try
             {
-                string inputID = txtIncoming.Text;
-                sendCommand(serialPort, "E" + inputID);
-                lblIncomingStatus.Text = txtIncoming.Text.ToUpper();
-                btnIncoming.Enabled = false;
-                txtIncoming.Text = "";
-                ClearLabels();
+                if(txtIncoming.Text.Length == 8)
+                {
+                    string inputID = txtIncoming.Text;
+                    sendCommand(serialPort, "E" + inputID);
+                    lblIncomingStatus.Text = txtIncoming.Text.ToUpper();
+                    btnIncoming.Enabled = false;
+                    txtIncoming.Text = "";
+                    ClearLabels();
+                }
+                else
+                {
+                    lblSMSMessage.Text = "Incoming ID must be 8 chars";
+                }
             }
 
             catch (Exception ex)
