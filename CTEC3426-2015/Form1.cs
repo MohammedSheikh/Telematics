@@ -27,8 +27,10 @@ namespace CTEC3426_2015
 
         string hash = "#";
         string outgoingID;
+        //array holding the CAN message data
         int[] array = new int[7];
         string bytes = "00000000000000";
+        //var to store current temp
         string currentTemp;
         int switchState;
         string switchByteOne;
@@ -36,11 +38,12 @@ namespace CTEC3426_2015
         int tempByteTwo;
         decimal tempThreshold;
         bool tempSet = false;
+        bool tempButton = false;
 
         public CTEC3426()
         {
             InitializeComponent();
-            
+
             initMenu();
         }
 
@@ -51,6 +54,7 @@ namespace CTEC3426_2015
             serialPort.Close();
         }
 
+        //method that sends remote commands by incorporating the serial port and hex data
         public void RemoteCommand()
         {
             int total = array.Sum();
@@ -60,6 +64,7 @@ namespace CTEC3426_2015
 
         private void CTEC3426_Load(object sender, EventArgs e)
         {
+            //disable buttons upon form load
             btnMotorFwdRev.Enabled = false;
             lblMDirection.Text = "";
             btnOutgoing.Enabled = false;
@@ -224,18 +229,18 @@ namespace CTEC3426_2015
         {
             try
             {
-                    if (lblHStatus.Text == "Off")
-                    {
-                        array[6] = 0x01;
-                        RemoteCommand();
-                        lblHStatus.Text = "On";
-                    }
-                    else
-                    {
-                        array[6] = 0x00;
-                        RemoteCommand();
-                        lblHStatus.Text = "Off";
-                    }
+                if (lblHStatus.Text == "Off")
+                {
+                    array[6] = 0x01;
+                    RemoteCommand();
+                    lblHStatus.Text = "On";
+                }
+                else
+                {
+                    array[6] = 0x00;
+                    RemoteCommand();
+                    lblHStatus.Text = "Off";
+                }
             }
             catch (Exception ex)
             {
@@ -304,7 +309,7 @@ namespace CTEC3426_2015
 
                 //call keypad method
                 int Key_Press = Convert.ToInt32(data[1]);
-                Keypad(Key_Press);                
+                Keypad(Key_Press);
 
                 //call switch status method
                 GetSwitchStatus(data);
@@ -313,7 +318,7 @@ namespace CTEC3426_2015
                 GetRemoteTemp(data);
 
                 //call temp control method
-                //TempControl(data);
+                TempControl(data);
             }
         }
 
@@ -330,7 +335,7 @@ namespace CTEC3426_2015
                 tempByteOne = int.Parse(byteThree, System.Globalization.NumberStyles.HexNumber);
                 tempByteTwo = int.Parse(byteFour, System.Globalization.NumberStyles.HexNumber);
                 currentTemp = Convert.ToString(tempByteOne + "." + tempByteTwo);
-                lblTemp.Text = currentTemp;                
+                lblTemp.Text = currentTemp;
             }
         }
 
@@ -345,7 +350,7 @@ namespace CTEC3426_2015
                 //Converitng the hex into decimal which displays in the label
                 switchState = int.Parse(byteZero, System.Globalization.NumberStyles.HexNumber);
                 switchByteOne = Convert.ToString(switchState);
-                lblSMSMessage.Text = switchByteOne;
+                //lblSMSMessage.Text = switchByteOne;
 
                 //no switches
                 if (switchByteOne == "0")
@@ -362,36 +367,24 @@ namespace CTEC3426_2015
                 {
                     array[0] = 0x01;
                     lblSwitch1OnOff.Text = "On";
-                    //lblSwitch2OnOff.Text = "Off";
-                    //lblSwitch3OnOff.Text = "Off";
-                    //lblSwitch4OnOff.Text = "Off";
                 }
                 //switch two ON
                 else if (switchByteOne == "2")
                 {
                     array[0] = 0x02;
                     lblSwitch2OnOff.Text = "On";
-                    //lblSwitch1OnOff.Text = "Off";
-                    //lblSwitch3OnOff.Text = "Off";
-                    //lblSwitch4OnOff.Text = "Off";
                 }
                 //switch three ON
-                else if (switchByteOne == "04")
+                else if (switchByteOne == "4")
                 {
                     array[0] = 0x04;
                     lblSwitch3OnOff.Text = "On";
-                    //lblSwitch1OnOff.Text = "Off";
-                    //lblSwitch2OnOff.Text = "Off";
-                    //lblSwitch4OnOff.Text = "Off";
                 }
                 //switch four ON
-                else if (switchByteOne == "08")
+                else if (switchByteOne == "8")
                 {
                     array[0] = 0x08;
                     lblSwitch4OnOff.Text = "On";
-                    //lblSwitch1OnOff.Text = "Off";
-                    //lblSwitch2OnOff.Text = "Off";
-                    //lblSwitch3OnOff.Text = "Off";
                 }
             }
         }
@@ -402,7 +395,7 @@ namespace CTEC3426_2015
             //temp control code that applies different behaviours depedning on temp
 
             for (int i = 1; i < data.Length; i++)
-
+            {
                 if (tempSet == true)
                 {
                     //If current temp is lower than threshold, turn on heater
@@ -411,7 +404,7 @@ namespace CTEC3426_2015
                     {
                         //heater ON status method
                         HeaterOn();
-                        lblSMSMessage.Text = "Temp is below threshold";
+                        lblSMSMessage.Text = "Temp is below threshold (Heater is ON)";
                         RemoteCommand();
                     }
 
@@ -419,17 +412,30 @@ namespace CTEC3426_2015
                     else if (tempThreshold < tempByteOne)
                     {
                         //motor ON status method
-                        MotorOn();                      
-                        lblSMSMessage.Text = "Temp is above threshold";
+                        MotorOn();
+                        lblSMSMessage.Text = "Temp is above threshold (Motor is ON)";
                         RemoteCommand();
                     }
                     //if same temp
                     else if (tempThreshold == tempByteOne && !string.IsNullOrEmpty(txtSetTemp.Text))
                     {
-                        lblSMSMessage.Text = "No threshold set";
+                        NoMotorNoHeater();
+                        lblSMSMessage.Text = "Temp is at threshold";
                         RemoteCommand();
                     }
                 }
+                else
+                {
+                    RemoteCommand();
+                }
+            }
+        }
+
+        void NoMotorNoHeater()
+        {
+            array[5] = 0x00;
+            array[6] = 0x00;
+            //RemoteCommand();
         }
 
         //method switching on the heater
@@ -437,6 +443,7 @@ namespace CTEC3426_2015
         {
             array[6] = 0x01;
             array[5] = 0x00;
+            RemoteCommand();
             lblHStatus.Text = "On";
             lblMDirection.Text = "Off";
         }
@@ -446,6 +453,7 @@ namespace CTEC3426_2015
         {
             array[5] = 0x02;
             array[6] = 0x00;
+           RemoteCommand();
             lblMStatus.Text = "On";
             lblHStatus.Text = "Off";
             lblMDirection.Text = "Forward";
@@ -459,63 +467,63 @@ namespace CTEC3426_2015
                 //keypad 0
                 case 30:
                     lblKey.Text = "0";
-                    
+
                     break;
                 //keypad 1
                 case 31:
                     lblKey.Text = "1";
-                    
+
                     break;
                 //keypad 2
                 case 32:
                     lblKey.Text = "2";
-                    
+
                     break;
                 //keypad 3
                 case 33:
                     lblKey.Text = "3";
-                    
+
                     break;
                 //keypad 4
                 case 34:
                     lblKey.Text = "4";
-                    
+
                     break;
                 //keypad 5
                 case 35:
                     lblKey.Text = "5";
-                    
+
                     break;
                 //keypad 6
                 case 36:
                     lblKey.Text = "6";
-                    
+
                     break;
                 //keypad 7
                 case 37:
                     lblKey.Text = "7";
-                    
+
                     break;
                 //keypad 8
                 case 38:
 
                     lblKey.Text = "8";
-                    
+
                     break;
                 //keypad 9
                 case 39:
                     lblKey.Text = "9";
-                    
+
                     break;
                 //keypad *
                 case 53:
                     lblKey.Text = "*";
-                    
+
                     break;
                 //keypad #
                 case 48:
                     lblKey.Text = "#";
-                    
+
                     break;
                 //default case
                 default:
@@ -523,7 +531,7 @@ namespace CTEC3426_2015
                     break;
             }
         }
-        
+
         private void btnMotorOnOff_Click(object sender, EventArgs e)
         {
             ToggleMotor();
@@ -608,21 +616,19 @@ namespace CTEC3426_2015
         void ToggleLED2()
         {
             try
-            {            
-                    if (lblLED2OnOff.Text == "Off")
-                    {
-                        array[1] = 0x20;
-                        RemoteCommand();
-                        // sendCommand(serialPort, hash + lblBroadCastID.Text + "2000000000000000");
-                        lblLED2OnOff.Text = "On";
-                    }
-                    else
-                    {
-                        array[1] = 0x00;
-                        RemoteCommand();
-                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
-                        lblLED2OnOff.Text = "Off";
-                    }
+            {
+                if (lblLED2OnOff.Text == "Off")
+                {
+                    array[1] = 0x20;
+                    RemoteCommand();
+                    lblLED2OnOff.Text = "On";
+                }
+                else
+                {
+                    array[1] = 0x00;
+                    RemoteCommand();
+                    lblLED2OnOff.Text = "Off";
+                }
             }
             catch (Exception ex)
             {
@@ -634,19 +640,19 @@ namespace CTEC3426_2015
         {
             try
             {
-              
-                    if (lblLED3OnOff.Text == "Off")
-                    {
-                        array[2] = 0x40;
-                        RemoteCommand();
-                        lblLED3OnOff.Text = "On";
-                    }
-                    else
-                    {
-                        array[2] = 0x00;
-                        RemoteCommand();
-                        lblLED3OnOff.Text = "Off";
-                    }
+
+                if (lblLED3OnOff.Text == "Off")
+                {
+                    array[2] = 0x40;
+                    RemoteCommand();
+                    lblLED3OnOff.Text = "On";
+                }
+                else
+                {
+                    array[2] = 0x00;
+                    RemoteCommand();
+                    lblLED3OnOff.Text = "Off";
+                }
             }
             catch (Exception ex)
             {
@@ -658,20 +664,18 @@ namespace CTEC3426_2015
         {
             try
             {
-                    if (lblLED4OnOff.Text == "Off")
-                    {
-                        array[3] = 0x80;
-                        RemoteCommand();
-                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "8000000000000000");
-                        lblLED4OnOff.Text = "On";
-                    }
-                    else
-                    {
-                        array[3] = 0x00;
-                        RemoteCommand();
-                        //sendCommand(serialPort, hash + lblBroadCastID.Text + "0000000000000000");
-                        lblLED4OnOff.Text = "Off";
-                    }
+                if (lblLED4OnOff.Text == "Off")
+                {
+                    array[3] = 0x80;
+                    RemoteCommand();
+                    lblLED4OnOff.Text = "On";
+                }
+                else
+                {
+                    array[3] = 0x00;
+                    RemoteCommand();
+                    lblLED4OnOff.Text = "Off";
+                }
             }
             catch (Exception ex)
             {
@@ -777,7 +781,7 @@ namespace CTEC3426_2015
                 lblSMSMessage.Text = "Please connect to the serial port";
             }
         }
-      
+
         private void btnSend_Click(object sender, EventArgs e)
         {
             try
@@ -965,7 +969,7 @@ namespace CTEC3426_2015
 
         private void btnBroadcast_Click(object sender, EventArgs e)
         {
-            SetBroadcastID();                      
+            SetBroadcastID();
         }
 
         private void btnOutgoing_Click(object sender, EventArgs e)
@@ -1091,7 +1095,8 @@ namespace CTEC3426_2015
 
         private void btnSetTemp_Click(object sender, EventArgs e)
         {
-           SetThreshold();         
+            SetThreshold();
+            btnControlTemp.Text = "Start Temp Control";
         }
 
         //set temperature threshold
@@ -1100,9 +1105,9 @@ namespace CTEC3426_2015
             bool validData = false;
             string setTemp = txtSetTemp.Text;
             try
-            {               
+            {
                 tempThreshold = Convert.ToDecimal(setTemp);
-                validData = true;                
+                validData = true;
             }
             catch
             {
@@ -1114,32 +1119,34 @@ namespace CTEC3426_2015
                 lblThreshold.Text = "Current Temperature Threshold: " + setTemp;
                 btnControlTemp.Enabled = true;
                 lblSMSMessage.Text = "";
-
-                if (setTemp.Length > 0)
-                {
-                    tempSet = true;
-                }
-
-                else
-                {
-                    tempSet = false;
-                }
             }
         }
 
         private void txtSetTemp_TextChanged(object sender, EventArgs e)
         {
-                btnSetTemp.Enabled = true;
+            btnSetTemp.Enabled = true;
         }
 
         private void btnControlTemp_Click(object sender, EventArgs e)
         {
-            try
+            if (tempButton == true)
             {
+                btnControlTemp.Text = "Start Temp Control";
+                txtSetTemp.Text = "";
+                lblThreshold.Text = "";
+                btnSetTemp.Enabled = false;
+                tempButton = false;
+                tempSet = false;
+                lblSMSMessage.Text = "";
+                NoMotorNoHeater();
+                lblHStatus.Text = "Off";
+                lblMStatus.Text = "Off";
             }
-            catch (Exception ex)
+            else if (tempButton == false)
             {
-                lblSMSMessage.Text = "Please connect to the serial port";
+                btnControlTemp.Text = "Stop Temp Control";
+                tempButton = true;
+                tempSet = true;
             }
         }
     }
