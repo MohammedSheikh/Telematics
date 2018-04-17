@@ -307,6 +307,10 @@ namespace CTEC3426_2015
 
                 //I am maksing use of the 'data' var in the below method calls
 
+
+                //call temp control method
+                TempControl(data);
+
                 //call keypad method
                 int Key_Press = Convert.ToInt32(data[1]);
                 Keypad(Key_Press);
@@ -317,8 +321,7 @@ namespace CTEC3426_2015
                 //call remote temp method
                 GetRemoteTemp(data);
 
-                //call temp control method
-                TempControl(data);
+                
             }
         }
 
@@ -426,7 +429,7 @@ namespace CTEC3426_2015
                 }
                 else
                 {
-                    RemoteCommand();
+                    //NoMotorNoHeater();
                 }
             }
         }
@@ -435,7 +438,7 @@ namespace CTEC3426_2015
         {
             array[5] = 0x00;
             array[6] = 0x00;
-            //RemoteCommand();
+            RemoteCommand();
         }
 
         //method switching on the heater
@@ -590,8 +593,7 @@ namespace CTEC3426_2015
         void ToggleLED1()
         {
             try
-            {
-
+            {                
                 if (lblLED1OnOff.Text == "Off")
                 {
                     array[0] = 0x10;
@@ -604,9 +606,7 @@ namespace CTEC3426_2015
                     RemoteCommand();
                     lblLED1OnOff.Text = "Off";
                 }
-
             }
-
             catch (Exception ex)
             {
                 lblSMSMessage.Text = "Please connect to the serial port";
@@ -1087,7 +1087,7 @@ namespace CTEC3426_2015
                 if(txtIncoming.Text.Length == 8)
                 {
                     string inputID = txtIncoming.Text;
-                    sendCommand(serialPort, "E" + inputID);
+                    sendCommand(serialPort, "E" , inputID);
                     lblIncomingStatus.Text = txtIncoming.Text.ToUpper();
                     btnIncoming.Enabled = false;
                     txtIncoming.Text = "";
@@ -1165,25 +1165,28 @@ namespace CTEC3426_2015
 
         private void btnControlTemp_Click(object sender, EventArgs e)
         {
-            if (tempButton == true)
-            {
-                btnControlTemp.Text = "Start Temp Control";
-                txtSetTemp.Text = "";
-                lblThreshold.Text = "";
-                btnSetTemp.Enabled = false;
-                tempButton = false;
-                tempSet = false;
-                lblSMSMessage.Text = "";
-                NoMotorNoHeater();
-                lblHStatus.Text = "Off";
-                lblMStatus.Text = "Off";
+                if (tempButton == true)
+                {
+                    btnControlTemp.Text = "Start / Stop Temp Control";
+                    txtSetTemp.Text = "";
+                    lblThreshold.Text = "";
+                    btnSetTemp.Enabled = false;
+                    tempButton = false;
+                    tempSet = false;
+                    lblSMSMessage.Text = "";
+                    NoMotorNoHeater();
+                    lblHStatus.Text = "Off";
+                    lblMStatus.Text = "Off";
+                    btnControlTemp.Enabled = false;
+
             }
-            else if (tempButton == false)
-            {
-                btnControlTemp.Text = "Stop Temp Control";
-                tempButton = true;
-                tempSet = true;
-            }
+                else if (tempButton == false)
+                {
+                    btnControlTemp.Text = "Stop Temp Control";
+                    tempButton = true;
+                    tempSet = true;
+                }
+
         }
     }
 }
